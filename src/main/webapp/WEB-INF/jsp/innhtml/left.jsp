@@ -38,7 +38,7 @@
 		<li class="active">
 			<a href="index.html">
 				<i class="menu-icon fa fa-tachometer"></i>
-				<span class="menu-text"> Dashboard </span>
+				<span class="menu-text"> 主页 </span>
 			</a>
 
 			<b class="arrow"></b>
@@ -48,7 +48,7 @@
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-desktop"></i>
 				<span class="menu-text">
-					UI &amp; Elements
+					组织管理功能
 				</span>
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
@@ -57,7 +57,7 @@
 				<li class="">
 					<a href="content-slider.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Content Sliders
+						员工检索
 					</a>
 					<b class="arrow"></b>
 				</li>
@@ -65,7 +65,7 @@
 				<li class="">
 					<a href="treeview.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Treeview
+						添加员工
 					</a>
 					<b class="arrow"></b>
 				</li>
@@ -73,7 +73,7 @@
 				<li class="">
 					<a href="jquery-ui.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						jQuery UI
+						添加部门
 					</a>
 
 					<b class="arrow"></b>
@@ -82,7 +82,7 @@
 				<li class="">
 					<a href="nestable-list.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Nestable Lists
+						部门列表
 					</a>
 					<b class="arrow"></b>
 				</li>
@@ -91,19 +91,17 @@
 
 		<li class="">
 			<a href="#" class="dropdown-toggle">
-				<i class="menu-icon fa fa-list"></i>
-				<span class="menu-text"> Tables </span>
-
+				<i class="menu-icon fa fa-calendar"></i>
+				<span class="menu-text"> 日程管理 </span>
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
-
 			<b class="arrow"></b>
-
+			
 			<ul class="submenu">
 				<li class="">
 					<a href="tables.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Simple &amp; Dynamic
+						个人日程
 					</a>
 
 					<b class="arrow"></b>
@@ -112,7 +110,16 @@
 				<li class="">
 					<a href="jqgrid.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						jqGrid plugin
+						 日程日历
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				
+				<li class="">
+					<a href="jqgrid.html">
+						<i class="menu-icon fa fa-caret-right"></i>
+						 定制会议
 					</a>
 
 					<b class="arrow"></b>
@@ -123,7 +130,7 @@
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-pencil-square-o"></i>
-				<span class="menu-text"> Forms </span>
+				<span class="menu-text"> 邮件功能 </span>
 
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
@@ -134,7 +141,7 @@
 				<li class="">
 					<a href="form-elements.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Form Elements
+						我的邮件
 					</a>
 
 					<b class="arrow"></b>
@@ -143,55 +150,17 @@
 				<li class="">
 					<a href="form-elements-2.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Form Elements 2
+						垃圾箱
 					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="form-wizard.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Wizard &amp; Validation
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="wysiwyg.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Wysiwyg &amp; Markdown
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="dropzone.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Dropzone File Upload
-					</a>
-
 					<b class="arrow"></b>
 				</li>
 			</ul>
 		</li>
 
 		<li class="">
-			<a href="calendar.html">
-				<i class="menu-icon fa fa-calendar"></i>
-				<span class="menu-text">
-					Calendar
-				</span>
-			</a>
-			<b class="arrow"></b>
-		</li>
-
-		<li class="">
 			<a href="#" class="dropdown-toggle">
-				<i class="menu-icon fa fa-tag"></i>
-				<span class="menu-text"> More Pages </span>
+				<i  class="menu-icon fa fa-file-o"></i>
+				<span class="menu-text">公告管理 </span>
 
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
@@ -202,43 +171,15 @@
 				<li class="">
 					<a href="profile.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						User Profile
+						公告审批
 					</a>
-
 					<b class="arrow"></b>
 				</li>
 
 				<li class="">
 					<a href="inbox.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Inbox
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="pricing.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Pricing Tables
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="timeline.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Timeline
-					</a>
-
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="login.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						Login &amp; Register
+						公告申请
 					</a>
 					<b class="arrow"></b>
 				</li>
@@ -247,13 +188,8 @@
 
 		<li class="">
 			<a href="#" class="dropdown-toggle">
-				<i class="menu-icon fa fa-file-o"></i>
-
-				<span class="menu-text">
-					Other Pages
-
-					<span class="badge badge-primary">2</span>
-				</span>
+				<i class="menu-icon fa fa-tag"></i>
+				<span class="menu-text">权限管理 </span>
 
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
@@ -262,9 +198,39 @@
 
 			<ul class="submenu">
 				<li class="">
+					<a href="profile.html">
+						<i class="menu-icon fa fa-caret-right"></i>
+						编辑角色
+					</a>
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="inbox.html">
+						<i class="menu-icon fa fa-caret-right"></i>
+						添加角色
+					</a>
+					<b class="arrow"></b>
+				</li>
+			</ul>
+		</li>
+
+		<li class="">
+			<a href="#" class="dropdown-toggle">
+				<i class="menu-icon fa fa-tasks"></i>
+				<span class="menu-text">
+					文件管理
+					<span class="badge badge-primary"></span>
+				</span>
+				<b class="arrow fa fa-angle-down"></b>
+			</a>
+			<b class="arrow"></b>
+
+			<ul class="submenu">
+				<li class="">
 					<a href="faq.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						FAQ
+						回收站
 					</a>
 					<b class="arrow"></b>
 				</li>
@@ -272,7 +238,7 @@
 				<li class="">
 					<a href="blank.html">
 						<i class="menu-icon fa fa-caret-right"></i>
-						Blank Page
+						操作文件夹
 					</a>
 					<b class="arrow"></b>
 				</li>
