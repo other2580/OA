@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.ActivityMapper">
+	<!-- 添加新的专辑 -->
+	<insert id="addActivity" parameterType="Activity" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO Activity(`CreatorId`,`CreateTime`,`Title`,`Description`,`Location`,`StartTime`,`EndTime`) 
+			VALUES (#{creatorId},#{createTime},#{title},#{description},#{location},#{startTime},#{endTime})
+	</insert>
+	<!-- 更新专辑 -->
+	<update id="updateActivity" parameterType="Activity">
+		update Activity set CreatorId = #{creatorId}, CreateTime = #{createTime},Title = #{title},Description = #{description},Location = #{location}, StartTime = #{startTime},EndTime = #{endTime}
+			where Id = #{id}
+	</update>
+	<!-- 查询全部 -->
+	<select id="findAll" resultType="Activity">
+		SELECT * FROM Activity
+	</select>
+	<!-- 根据creatorId查询详细信息 -->
+	<select id="findActivityById" resultType="Activity" parameterType="int">
+		SELECT * FROM Activity WHERE creatorId = #{creatorId}
+	</select>
+	<!-- 根据专辑Id查询详细信息 -->
+	<select id="deleteActivity" resultType="Activity" parameterType="int">
+		SELECT * FROM Activity WHERE Id = #{id}
+	</select>
+</mapper>

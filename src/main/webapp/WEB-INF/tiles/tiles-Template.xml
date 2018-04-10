@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 定义模板 -->
+	<definition name="adminTemplate" template="/WEB-INF/jsp/shared/adminTemplate.jsp">
+	</definition>
+	<!-- 定义后台界面（主页） -->
+	<definition name="index" extends="adminTemplate">
+		<put-attribute name="title" value="主页" />
+		<put-attribute name="head" value="/WEB-INF/jsp/innhtml/head.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/innhtml/left.jsp" />
+		<put-attribute name="main" value="/WEB-INF/jsp/index.jsp" />
+	</definition>
+</tiles-definitions>
