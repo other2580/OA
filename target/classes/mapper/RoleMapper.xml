@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.RoleMapper">
+	<!-- 添加新角色 -->
+	<insert id="add" parameterType="Role" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO Role(Name) VALUES(#{name})
+	</insert>
+	<!-- 删除角色 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM Role WHERE id = #{id}
+	</delete>
+	<!-- 修改角色 -->
+	<update id="update" parameterType="Role">
+		UPDATE Role SET name = #{name} WHERE id = #{id}
+	</update>
+	
+	<sql id="sql">
+		SELECT r.*,
+			f.id AS function_id,
+			f.`Name` AS function_name,
+			f.`Code` AS function_code,
+			f.`IsMenuItem` AS function_isMenuItem,
+			f.`MenuLogo` AS function_menulogo,
+			f.`MenuEntry` AS function_menuEntry,
+			f.`ParentId` AS function_parentId
+		FROM Role AS r
+			LEFT JOIN FUNCTION AS f ON(f.`Id` IN(SELECT functionId FROM RoleFunction WHERE roleId = r.`Id`))
+	</sql>
+	<resultMap type="Role" id="RoleResultMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		
+		<collection property="functions" ofType="Function">
+			<id column="function_id" property="id"/>
+			<result column="function_name" property="name"/>
+			<result column="function_code" property="code"/>
+			<result column="function_isMenuItem" property="isMenuItem"/>
+			<result column="function_menulogo" property="menuLogo"/>
+			<result column="function_menuEntry" property="menuEntry"/>
+			<result column="function_parentId" property="parent.id"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 根据Id 查找角色信息 -->
+	<select id="fetchRoleById" resultMap="RoleResultMap" parameterType="int">
+		<include refid="sql" /> WHERE r.id = #{id}
+	</select>
+	<!-- 根据角色名查找角色信息 -->
+	<select id="fetchRoleByName" resultMap="RoleResultMap" parameterType="string">
+		<include refid="sql" /> WHERE r.name = #{name}
+	</select>
+	<!-- 查找全部角色信息 -->
+	<select id="fetchAllRole" resultMap="RoleResultMap">
+		<include refid="sql" />
+	</select>
+</mapper>

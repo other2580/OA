@@ -103,16 +103,14 @@
 						<i class="menu-icon fa fa-caret-right"></i>
 						个人日程
 					</a>
-
 					<b class="arrow"></b>
 				</li>
 
 				<li class="">
-					<a href="jqgrid.html">
+					<a href="calendar">
 						<i class="menu-icon fa fa-caret-right"></i>
 						 日程日历
 					</a>
-
 					<b class="arrow"></b>
 				</li>
 				
@@ -121,7 +119,6 @@
 						<i class="menu-icon fa fa-caret-right"></i>
 						 定制会议
 					</a>
-
 					<b class="arrow"></b>
 				</li>
 			</ul>

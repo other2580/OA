@@ -4,47 +4,47 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import myoa.biz.ActivityBiz;
 import myoa.entity.Activity;
+import myoa.entity.Employee;
 import myoa.mapper.ActivityMapper;
 
 @Service
-public class ActivityBizImpl implements ActivityBiz{
+public class ActivityBizImpl implements ActivityBiz {
 
 	@Autowired
 	private ActivityMapper activityMapper;
-	
+
 	@Override
-	public List<Activity> findAll() {
-		return activityMapper.findAll();
+	public void add(Activity activity) {
+		activityMapper.add(activity);
 	}
 
 	@Override
-	public Activity findActivityById(int creatorId) {
-		return activityMapper.findActivityById(creatorId);
+	public void delete(int id) {
+		activityMapper.delete(id);
 	}
 
 	@Override
-	public int addActivity(Activity activity) {
-		return activityMapper.addActivity(activity);
+	public void update(Activity activity) {
+		activityMapper.update(activity);
 	}
 
 	@Override
-	public void updateActivity(Activity activity) {
-		activityMapper.updateActivity(activity);
-	}
-
-	@Override
-	public void deleteActivity(int id) {
-		activityMapper.deleteActivity(id);
+	public Activity fetchActivityById(int id) {
+		return activityMapper.fetchActivityById(id);
 	}
 	
 	public static void main(String[] args) {
-		ActivityBiz target = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(ActivityBiz.class);
-		System.out.println(target.findAll().size()+" 123");
+		ActivityBiz tar = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(ActivityBiz.class);
+		System.out.println(tar.fetchActivityById(1).getCreator().getName());
+//		List<Employee> list = tar.fetchActivityById(1).getParticipant();
+//		for(Employee map : list) {
+//			System.out.println(map.getName());
+//		}
 	}
 
+	
 }

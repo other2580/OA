@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.DocumentMapper">	
+	<resultMap type="Document" id="DocumentResultMap">
+		<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="description"/>
+			<result property="createTime" column="createTime"/>
+			<result property="type" column="type"/>
+			<result property="fileUrl" column="fileUrl"/>
+		<association property="employee" javaType="Employee">
+			<id column="e_id" property="id"/>
+				<result column="e_nr" property="nr"/>
+				<result column="e_password" property="password"/>
+				<result column="e_name" property="name"/>
+				<result column="e_gender" property="gender"/>
+				<result column="e_email" property="email"/>
+				<result column="e_isManager" property="isManager"/>
+				<result column="e_status" property="status"/>
+		</association>
+	</resultMap>
+	
+	<sql id="DocumentJoinEmployee">
+		select d.*, 
+				e.id as e_id,
+				e.nr as e_nr,
+				e.password as e_password,
+				e.name as e_name,
+				e.gender as e_gender,
+				e.email as e_email,
+				e.isManager as e_isManager,
+				e.status as e_status
+		from Document d
+		join Employee e on e.id=d.creatorId
+	</sql>
+	
+	<!-- 子版块 -->
+	<select id="fetchByParentId" resultMap="DocumentResultMap">
+		<include refid="DocumentJoinEmployee"/> where d.parentId = #{parentId}
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="addDocument" parameterType="Document">
+		INSERT INTO Document(NAME,Description,CreatorId,CreateTime,TYPE,FileUrl,ParentId)
+		VALUES(#{name},#{description},#{creatorId},now(),#{type},#{fileUrl},#{parentId})
+	</insert>
+	
+	<!-- 删除 -->
+	<delete id="delDocument" parameterType="int">
+		delete from Document where id = #{id}
+	</delete>
+	
+</mapper>

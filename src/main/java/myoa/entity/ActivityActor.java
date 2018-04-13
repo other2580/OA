@@ -1,5 +1,7 @@
 package myoa.entity;
 
+import java.util.List;
+
 public class ActivityActor {
 	
 	private int id;

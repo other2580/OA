@@ -1,28 +1,57 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
  	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myoa.mapper.ActivityMapper">
-	<!-- 添加新的专辑 -->
-	<insert id="addActivity" parameterType="Activity" keyProperty="id" useGeneratedKeys="true">
-		INSERT INTO Activity(`CreatorId`,`CreateTime`,`Title`,`Description`,`Location`,`StartTime`,`EndTime`) 
-			VALUES (#{creatorId},#{createTime},#{title},#{description},#{location},#{startTime},#{endTime})
+	<!-- 添加日程 -->
+	<insert id="add" parameterType="Activity" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO Activity(CreatorId, CreateTime, Title, Description, Location, StartTime, EndTime)	
+			VALUES(#{creator.id}, #{createtime}, #{title}, #{description}, #{location}, #{startTime}, #{endTime})
 	</insert>
-	<!-- 更新专辑 -->
-	<update id="updateActivity" parameterType="Activity">
-		update Activity set CreatorId = #{creatorId}, CreateTime = #{createTime},Title = #{title},Description = #{description},Location = #{location}, StartTime = #{startTime},EndTime = #{endTime}
-			where Id = #{id}
+	<!-- 删除日程 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM Activity WHERE id = #{id}
+	</delete>
+	<!-- 修改日程 -->
+	<update id="update" parameterType="Activity">
+		UPDATE Activity
+		<set>
+			<if test="creator != null">creatorId = #{creator.id},</if>
+			<if test="createtime != null">Createtime = #{createtime},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="location != null">location = #{location},</if>
+			<if test="startTime != null">startTime = #{startTime},</if>
+			<if test="endTime != null">endTime = #{endTime},</if>
+		</set>
+		<where>
+			id = #{id}
+		</where>
 	</update>
-	<!-- 查询全部 -->
-	<select id="findAll" resultType="Activity">
-		SELECT * FROM Activity
-	</select>
-	<!-- 根据creatorId查询详细信息 -->
-	<select id="findActivityById" resultType="Activity" parameterType="int">
-		SELECT * FROM Activity WHERE creatorId = #{creatorId}
-	</select>
-	<!-- 根据专辑Id查询详细信息 -->
-	<select id="deleteActivity" resultType="Activity" parameterType="int">
-		SELECT * FROM Activity WHERE Id = #{id}
+	
+	
+	<sql id="sql">
+		SELECT a.*, b.*
+		FROM Activity AS a
+			LEFT JOIN ActivityActor AS b ON(b.ActivityId = a.id)
+	</sql>
+	<resultMap type="Activity" id="ActivityResultMap">
+		<id column="id" property="id"/>
+		<result column="createtime" property="createtime"/>
+		<result column="title" property="title"/>
+		<result column="description" property="description"/>
+		<result column="location" property="location"/>
+		<result column="startTime" property="startTime"/>
+		<result column="endTime" property="endTime"/>
+		
+		<association property="creator" column="creatorId" 
+			javaType="Employee" select="myoa.mapper.EmployeeMapper.fetchEmployeeById" />
+		<collection property="participant" column="ActorId" 
+			 ofType="Employee" select="myoa.mapper.EmployeeMapper.fetchEmployeeById"/>
+	</resultMap>
+	
+	<!-- 根据日程Id 查询日程 -->
+	<select id="fetchActivityById" resultMap="ActivityResultMap" parameterType="int">
+		<include refid="sql" /> WHERE a.id = #{id}
 	</select>
 </mapper>
