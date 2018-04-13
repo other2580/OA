@@ -132,6 +132,41 @@
 
 								<div id="calendar"></div>
 							</div>
+							
+							<div class="col-sm-3">
+								<div class="widget-box transparent">
+									<div class="widget-header">
+										<h4>Draggable events</h4>
+									</div>
+
+									<div class="widget-body">
+										<div class="widget-main no-padding">
+											<div id="external-events">
+												<div class="external-event label-grey" data-class="label-grey">
+													<i class="ace-icon fa fa-arrows"></i>
+													回家陪老婆
+												</div>
+
+												<div class="external-event label-success" data-class="label-success">
+													<i class="ace-icon fa fa-arrows"></i>
+													一个重要的会议
+												</div>
+
+												<div class="external-event label-danger" data-class="label-danger">
+													<i class="ace-icon fa fa-arrows"></i>
+													下午三点飞伦敦
+												</div>
+
+												<div class="external-event label-purple" data-class="label-purple">
+													<i class="ace-icon fa fa-arrows"></i>
+													提交会议方案
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
 						</div>
 
 						<!-- PAGE CONTENT ENDS -->
@@ -140,9 +175,26 @@
 			</div><!-- /.page-content -->
 		</div>
 		
+		<!-- 模态框显示当前日期的所有日程 -->
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 		
-		<!--[if !IE]> -->
-		<script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
 
 		<!-- <![endif]-->
 
@@ -165,9 +217,9 @@
 				<script src="static/assets/js/ace.min.js"></script>-->
 		
 				<!-- inline scripts related to this page -->
-				<script type="text/javascript">
-					jQuery(function($) {
-		
+		<script type="text/javascript">
+			jQuery(function($) {
+
 		/* initialize the external events
 			-----------------------------------------------------------------*/
 		
@@ -202,6 +254,8 @@
 				//isRTL: true,
 				//firstDay: 1,// >> change first day of week 
 				
+				aspectRatio: 1.85,
+				
 				buttonHtml: {
 					prev: '<i class="ace-icon fa fa-chevron-left"></i>',
 					next: '<i class="ace-icon fa fa-chevron-right"></i>'
@@ -221,7 +275,8 @@
 		              id: 3,
 		              title: '给一点颜色',
 		              start: '2018-04-16 10:00',
-		              color: 'red'
+		              color: 'red',
+		              url:'https://v3.bootcss.com/javascript/#modals'
 		          },
 		          {
 	                  id: 5,
@@ -276,24 +331,7 @@
 				selectable: true,
 				selectHelper: true,
 				select: function(start, end, allDay) {
-					
-					bootbox.prompt("New Event Title:", function(title) {
-						if (title !== null) {
-							calendar.fullCalendar('renderEvent',
-								{
-									title: title,
-									start: start,
-									end: end,
-									allDay: allDay,
-									className: 'label-info'
-								},
-								true // make the event "stick"
-							);
-						}
-					});
-					
-		
-					calendar.fullCalendar('unselect');
+					$("#myModal").modal('show');
 				}
 				,
 				eventClick: function(calEvent, jsEvent, view) {
@@ -348,7 +386,8 @@
 					// change the border color just for fun
 					//$(this).css('border-color', 'red');
 		
-				}
+				},
+				
 				
 			});
 		

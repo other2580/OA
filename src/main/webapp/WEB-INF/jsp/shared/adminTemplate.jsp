@@ -9,12 +9,17 @@
 		<title><tiles:insertAttribute name="title" /></title>
 		<meta name="description" content="overview &amp; stats" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+		
 		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
 		<link rel="stylesheet" href="static/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<link rel="stylesheet" href="static/assets/css/ace-skins.min.css" />
 		<link rel="stylesheet" href="static/assets/css/ace-rtl.min.css" />	
 		<script src="static/assets/js/ace-extra.min.js"></script>
+		
+		<script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
+		<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+		
 	</head>
 	<body class="no-skin">
 		<div id="navbar" class="navbar navbar-default ace-save-state">
@@ -61,11 +66,11 @@
 			</a>
 		</div><!-- /.main-container -->
 		<!-- basic scripts -->
-		<script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
+		
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='static/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-		<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+		
 		<script src="static/assets/js/jquery-ui.custom.min.js"></script>
 		<script src="static/assets/js/jquery.ui.touch-punch.min.js"></script>
 		<script src="static/assets/js/jquery.easypiechart.min.js"></script>
