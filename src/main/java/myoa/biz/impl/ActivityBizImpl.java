@@ -1,14 +1,11 @@
 package myoa.biz.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 
 import myoa.biz.ActivityBiz;
 import myoa.entity.Activity;
-import myoa.entity.Employee;
 import myoa.mapper.ActivityMapper;
 
 @Service
@@ -39,11 +36,19 @@ public class ActivityBizImpl implements ActivityBiz {
 	
 	public static void main(String[] args) {
 		ActivityBiz tar = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(ActivityBiz.class);
-		System.out.println(tar.fetchActivityById(1).getCreator().getName());
+//		System.out.println(tar.fetchActivityById(1).getCreator().getName());
 //		List<Employee> list = tar.fetchActivityById(1).getParticipant();
 //		for(Employee map : list) {
 //			System.out.println(map.getName());
 //		}
+		
+		
+	}
+
+	@Override
+	public Activity fetchAllActivity() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

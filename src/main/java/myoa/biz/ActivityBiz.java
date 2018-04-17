@@ -37,4 +37,11 @@ public interface ActivityBiz {
 	 */
 	Activity fetchActivityById(@Param("id") int id);
 	
+	/**
+	 * 查找全部日程
+	 * 
+	 * @return 日程对象
+	 */
+	Activity fetchAllActivity();
+	
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.ActivityActorMapper">
+	<sql id="ActivityActorJoin">
+		SELECT a.*,e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
+		d.name dname,d.description,d.status dstatus 
+		FROM ActivityActor a
+		LEFT JOIN Employee e ON a.actorId=e.id 
+		LEFT JOIN Department d ON e.DepartmentId=d.id 
+		where 1=1
+	</sql>
+	<sql id="ActivityActorJoinActivity">
+		SELECT c.*,a.creatorId,a.title,a.createtime,a.description,a.location,a.startTime,a.endTime,
+		e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
+		d.name dname,d.description,d.status dstatus 
+		FROM ActivityActor c
+		LEFT JOIN Activity a ON c.activityId=a.id 
+		LEFT JOIN Employee e ON a.creatorId=e.id 
+		LEFT JOIN Department d ON e.DepartmentId=d.id
+		where 1=1
+	</sql>
+	<resultMap type="ActivityActor" id="ActivityActorRM">
+		<id column="id" property="id" />
+		<association property="activity" javaType="Activity">
+			<id column="ActivityId" property="id" />
+		</association>
+		<association property="employee" javaType="Employee">
+			<id column="actorId" property="id" />
+			<result column="nr" property="nr" />
+			<result column="password" property="password" />
+			<result column="ename" property="name" />
+			<result column="gender" property="gender" />
+			<result column="isManager" property="isManager" />
+			<result column="estatus" property="status" />
+			<association property="department" javaType="Department">
+				<id column="departmentId" property="id" />
+				<result column="dname" property="name" />
+				<result column="description" property="description" />
+				<result column="dstatus" property="status" />
+			</association>
+		</association>
+	</resultMap>
+	<resultMap type="ActivityActor" id="ActivityActorJoinRM">
+		<id column="id" property="id" />
+		<association property="activity" javaType="Activity">
+			<id column="ActivityId" property="id" />
+			<result column="title" property="title" />
+			<result column="createtime" property="createtime" />
+			<result column="description" property="description" />
+			<result column="location" property="location" />
+			<result column="startTime" property="startTime" />
+			<result column="endTime" property="endTime" />
+			<association property="employee" javaType="Employee">
+				<id column="creatorId" property="id" />
+				<result column="nr" property="nr" />
+				<result column="password" property="password" />
+				<result column="ename" property="name" />
+				<result column="gender" property="gender" />
+				<result column="isManager" property="isManager" />
+				<result column="estatus" property="status" />
+				<association property="department" javaType="Department">
+					<id column="departmentId" property="id" />
+					<result column="dname" property="name" />
+					<result column="description" property="description" />
+					<result column="dstatus" property="status" />
+				</association>
+			</association>
+		</association>
+		<association property="employee" javaType="Employee">
+			<id column="ActorId" property="id" />
+		</association>
+	</resultMap>
+	<select id="getByActivityId" parameterType="int" resultMap="ActivityActorRM">
+		<include refid="ActivityActorJoin"></include>
+		and a.activityId=#{id}
+	</select>
+	<select id="getByActorId" parameterType="int" resultMap="ActivityActorJoinRM">
+		<include refid="ActivityActorJoinActivity"></include>
+		and c.actorId=#{id}
+	</select>
+	<insert id="add" parameterType="ActivityActor" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO ActivityActor VALUES(#{id},#{activity.id},#{employee.id})
+	</insert>
+	<update id="update" parameterType="ActivityActor">
+		UPDATE ActivityActor
+		<set>
+			<if test="activity.id!=0">ActivityId=#{activity.id},</if>
+			<if test="employee.id!=0">ActorId=#{employee.id},</if>
+		</set>
+		where id=#{id}
+	</update>
+	<delete id="detele" parameterType="int">
+		DELETE FROM ActivityActor WHERE where id=#{id}
+	</delete>
+	<select id="fetchById" parameterType="int" resultMap="ActivityActorJoinRM">
+		<include refid="ActivityActorJoinActivity"></include>
+		and c.id=#{id}
+	</select>
+</mapper>

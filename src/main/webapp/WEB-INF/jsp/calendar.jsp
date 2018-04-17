@@ -24,7 +24,30 @@
 		<script src="static/assets/js/html5shiv.min.js"></script>
 		<script src="static/assets/js/respond.min.js"></script>
 		<![endif]-->
-    
+		
+		<!-- datetimepicker -->
+		<link href="${pageContext.request.contextPath}/static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+		<script src="${pageContext.request.contextPath}/static/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+		<script src="${pageContext.request.contextPath}/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		
+		<script type="text/javascript">
+			$(function(){
+				$(".time").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",	//日期格式
+					autoclose:true,     	//选择后自动关闭
+					startDate:new Date()
+				});
+			});
+			
+			//鼠标悬停
+			$("p").mouseover(function(){
+			    $("p").css("background-color","yellow");
+			});
+			$("p").mouseout(function(){
+			    $("p").css("background-color","#E9E9E4");
+			});
+		</script>         
+	    
 		<div class="main-content-inner">
 			<div class="breadcrumbs ace-save-state" id="breadcrumbs">
 				<ul class="breadcrumb">
@@ -182,14 +205,58 @@
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">我的日程</h4>
+		      </div>
+		      <form class="form-horizontal" action="?" method="post">
+		      	<div class="modal-body">
+				  <div class="form-group">
+				    <label for="inputTitle" class="col-sm-2 control-label">标题</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="inputTitle" placeholder="下午有个会议">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputStars" class="col-sm-2 control-label">开始时间</label>
+				    <div class="col-sm-10">
+					    <input size="24" type="text" value="" id="inputStars" class="time">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEnd" class="col-sm-2 control-label">结束时间</label>
+				    <div class="col-sm-10">
+				      <input size="24" type="text" value="" id="inputEnd" class="time">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputConent" class="col-sm-2 control-label">会议内容</label>
+				    <div class="col-sm-10">
+				      <textarea class="form-control" rows="3"></textarea>
+				    </div>
+				  </div>
+			    </div>
+			    <div class="modal-footer">
+			      <button type="submit" class="btn btn-primary">Save changes</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			    </div>
+			  </form>
+		    </div>
+		  </div>
+		</div>
+		
+		<!-- 模态框显示日程详细信息 -->
+		<!-- Modal -->
+		<div class="modal fade" id="myModalDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header" style="text-align: center;">
 		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
 		      </div>
 		      <div class="modal-body">
-		        ...
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <table>
+		        	<tr>
+		        		<td></td>
+		        	</tr>
+		        </table>
 		      </div>
 		    </div>
 		  </div>
@@ -264,25 +331,26 @@
 				header: {
 					left: 'prev,next today',
 					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
+					right: 'month,agendaWeek,agendaDay',
 				},
 				events: [
 				  {
 					  title: 'All Day Event',
-	                  start: '2018-04-12'
+	                  start: '2018-04-12',
+	               	  color: 'green'
 				  },
 		          {
 		              id: 3,
 		              title: '给一点颜色',
-		              start: '2018-04-16 10:00',
-		              color: 'red',
+		              start: '2018-04-16 14:00',
+		              color: 'green',
 		              url:'https://v3.bootcss.com/javascript/#modals'
 		          },
 		          {
 	                  id: 5,
 	                  title: '使用className:doing',
-	                  start: '2018-04-16 16:30',
-	                  end: '2018-04-16 17:30',
+	                  start: '2018-04-16',
+	                  end: '2018-04-18',
 	                  color: 'green',
 	                  className: 'doing'
 		          }
@@ -331,33 +399,12 @@
 				selectable: true,
 				selectHelper: true,
 				select: function(start, end, allDay) {
+					//我的日程模态框
 					$("#myModal").modal('show');
 				}
 				,
 				eventClick: function(calEvent, jsEvent, view) {
-					
-		
-					//display a modal
-					var modal = 
-					'<div class="modal fade">\
-					  <div class="modal-dialog">\
-					   <div class="modal-content">\
-						 <div class="modal-body">\
-						   <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
-						   <form class="no-margin">\
-							  <label>Change event name &nbsp;</label>\
-							  <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
-							 <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-						   </form>\
-						 </div>\
-						 <div class="modal-footer">\
-							<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
-							<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-						 </div>\
-					  </div>\
-					 </div>\
-					</div>';
-				
+									
 				
 					var modal = $(modal).appendTo('body');
 					modal.find('form').on('submit', function(ev){
@@ -387,10 +434,17 @@
 					//$(this).css('border-color', 'red');
 		
 				},
-				
-				
 			});
-		
-		
+			
 		})
 		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

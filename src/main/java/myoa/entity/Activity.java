@@ -16,6 +16,7 @@ public class Activity {
 	private Date startTime; // 开始时间
 	private Date endTime; // 结束时间
 	private List<Employee> participant = new ArrayList<>(); // 活动参与者
+	private Employee employee;
 
 	public Activity() {
 	}
@@ -32,6 +33,27 @@ public class Activity {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.participant = participant;
+	}
+	public Activity(int id, Employee creator, Date createtime, String title, String description, String location,
+			Date startTime, Date endTime, Employee employee) {
+		super();
+		this.id = id;
+		this.creator = creator;
+		this.createtime = createtime;
+		this.title = title;
+		this.description = description;
+		this.location = location;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.employee = employee;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public int getId() {

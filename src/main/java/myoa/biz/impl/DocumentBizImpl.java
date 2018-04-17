@@ -38,7 +38,9 @@ public class DocumentBizImpl implements DocumentBiz{
 	
 	public static void main(String[] args) {
 		DocumentBiz target = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(DocumentBiz.class);
-		System.out.println(target.fetchByParentId(0).get(0).getEmployee().getName());
+		for(Document list : target.fetchByParentId(1)) {
+			System.out.println(list.getParentId()+"   "+list.getName()+"   "+list.getEmployee().getName());
+		}
 	}
 
 }

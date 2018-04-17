@@ -35,6 +35,9 @@
 		FROM Activity AS a
 			LEFT JOIN ActivityActor AS b ON(b.ActivityId = a.id)
 	</sql>
+	<sql id="ActivityByEmployee">
+		
+	</sql>
 	<resultMap type="Activity" id="ActivityResultMap">
 		<id column="id" property="id"/>
 		<result column="createtime" property="createtime"/>

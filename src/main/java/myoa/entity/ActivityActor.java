@@ -1,19 +1,17 @@
 package myoa.entity;
 
-import java.util.List;
-
 public class ActivityActor {
 	
 	private int id;
-	private int activityId;
-	private int actorId;
+	private Activity activity;
+	private Employee employee;
 	
 	public ActivityActor() {}
 	
-	public ActivityActor(int id, int activityId, int actorId) {
+	public ActivityActor(int id, Activity activity, Employee employee) {
 		this.id = id;
-		this.activityId = activityId;
-		this.actorId = actorId;
+		this.employee = employee;
+		this.activity = activity;
 	}
 
 	public int getId() {
@@ -22,17 +20,22 @@ public class ActivityActor {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getActivityId() {
-		return activityId;
+
+	public Activity getActivity() {
+		return activity;
 	}
-	public void setActivityId(int activityId) {
-		this.activityId = activityId;
+
+	public void setActivity(Activity activity) {
+		this.activity = activity;
 	}
-	public int getActorId() {
-		return actorId;
+
+	public Employee getEmployee() {
+		return employee;
 	}
-	public void setActorId(int actorId) {
-		this.actorId = actorId;
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
+	
 	
 }

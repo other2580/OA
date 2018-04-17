@@ -10,6 +10,7 @@
 			<result property="createTime" column="createTime"/>
 			<result property="type" column="type"/>
 			<result property="fileUrl" column="fileUrl"/>
+			<result property="parentId" column="parentId"/>
 		<association property="employee" javaType="Employee">
 			<id column="e_id" property="id"/>
 				<result column="e_nr" property="nr"/>
