@@ -33,7 +33,7 @@ public class MessageReceptionController {
 			@RequestParam(name="status", required=true, defaultValue="-1")int status,
 			@RequestParam(name="pageNum", required=true, defaultValue="1")int pageNum) {
 		EmployeeDetailsImpl userDetails = (EmployeeDetailsImpl) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-		final int pageSize=4;
+		final int pageSize=6;
 		List<MessageReception> messageReception=biz.fetchReAll(userDetails.getEmployee().getId(),isRead,status, pageNum, pageSize);
 		int row=biz.fetchReRow(userDetails.getEmployee().getId(),isRead, status);
 		int totalPages=row%pageSize==0?row/pageSize:row/pageSize+1;

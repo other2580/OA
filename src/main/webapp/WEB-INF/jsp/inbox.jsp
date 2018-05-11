@@ -100,7 +100,7 @@ div.pager span.pageInfo {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="../index">首页</a>
+				<a class="navbar-brand" href="index">首页</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-menu">
 				<ul class="nav navbar-nav">
@@ -114,7 +114,7 @@ div.pager span.pageInfo {
 							<li><a href="inbox-edit">编写新邮件</a></li>
 						</ul></li>
 					<c:if test="${user!=null}">
-						<li class="dropdown"><a href="../create-topic">发表主题</a></li>
+						<li class="dropdown"><a href="inbox-edit">发表主题</a></li>
 					</c:if>
 				</ul>
 				<form class="navbar-form navbar-left" role="search">
@@ -140,9 +140,7 @@ div.pager span.pageInfo {
 			<input type="hidden" id="index" name="index" /> <input type="hidden"
 				id="isRead" name="isRead" />
 			<div class="fun" style="margin-left: 60px;">
-				<!-- <a class="btn btn-default" href="#" role="button">删除</a>
-				<a class="btn btn-default" href="#" role="button">彻底删除</a>
-				<a class="btn btn-default" href="#" role="button">全部标记为已读</a> -->
+				
 				<table id="function">
 					<tr>
 						<td><button id="delete-de" type="button">
@@ -151,7 +149,7 @@ div.pager span.pageInfo {
 						<td><button id="delete-del" type="button">
 								<i class="ace-icon fa fa-trash"></i>&nbsp彻底删除
 							</button></td>
-						<td><button type="button" id="Read">全部标记为已读</button></td>
+						<!-- <td><button type="button" id="Read">全部标记为已读</button></td> -->
 					</tr>
 				</table>
 			</div>

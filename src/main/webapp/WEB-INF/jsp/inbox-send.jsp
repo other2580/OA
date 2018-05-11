@@ -147,7 +147,7 @@ div.pager span.pageInfo {
 							<li><a href="inbox-edit">编写新邮件</a></li>
 						</ul></li>
 					<c:if test="${user!=null}">
-						<li class="dropdown"><a href="../create-topic">发表主题</a></li>
+						<li class="dropdown"><a href="inbox-edit">发表主题</a></li>
 					</c:if>
 				</ul>
 				<form class="navbar-form navbar-left" role="search">

@@ -72,7 +72,7 @@ public class MessageController {
 			String title) {	
 		
 		EmployeeDetailsImpl userDetails = (EmployeeDetailsImpl) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
-		final int pageSize=2;
+		final int pageSize=6;
 		int rows=biz.fetchRow(userDetails.getEmployee().getId(), isSent, status, level,title);
 		int totalPages=rows%pageSize==0?rows/pageSize:rows/pageSize+1;
 		List<Message> messages=biz.fetchAll(userDetails.getEmployee().getId(), isSent, status, level,title, pageNum, pageSize);		

@@ -12,6 +12,20 @@
 	src="${pageContext.request.contextPath}/static/bootstrap-fileinput-master/js/fileinput.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/static/bootstrap-fileinput-master/js/locales/zh-TW.js"></script>
+<style>
+#depa li{list-style: none;padding: 0px }
+
+#depa{
+padding:0px;
+}
+
+.dname{
+    margin:25px;
+    font-size:18px;
+}
+
+
+</style>
 
 <div class="main-content-inner">
 	<div class="container-fluid">
@@ -152,11 +166,11 @@
 					style="margin-top: -25px; margin-left: 130px; border: 0px;"></span>
 				<ul id="depa">
 					<c:forEach var="d" items="${departments}">
-						<li class="dname">${d.name}
+						<li class="dname">&nbsp;&nbsp;&nbsp;&nbsp;<i  class="glyphicon glyphicon-user" aria-hidden="true"></i>&nbsp;&nbsp;${d.name}
 							<ul class="emp" style="list-style-type: none;">
 								<c:forEach var="e" items="${employees}">
 									<c:if test="${d.id==e.department.id}">
-										<li data-id="${e.id}" data-nr="${e.nr}" data-name="${e.name}">${e.name}
+										<li data-id="${e.id}" data-nr="${e.nr}" data-name="${e.name}"><i aria-hidden="true">&nbsp;&nbsp;</i>${e.name}
 											<span style="margin-left: 20px;">${e.nr}</span>
 										</li>
 									</c:if>
@@ -165,6 +179,7 @@
 						</li>
 					</c:forEach>
 				</ul>
+
 
 			</div>
 
@@ -240,6 +255,14 @@
 		$(".close").click(function() {
 			window.history.go(-1);
 		});
+		
+		$(".emp").css("display","none");
+		
+		$(".dname").click(
+			function(){
+				$(this).children().fadeToggle();		
+		});
+
 
 	})
 </script>
