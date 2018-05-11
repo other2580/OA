@@ -1,5 +1,7 @@
 package myoa.biz.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,13 @@ public class ActivityBizImpl implements ActivityBiz {
 		return activityMapper.fetchActivityById(id);
 	}
 	
+	@Override
+	public List<Activity> fetchAllActivityById(int id) {
+		return activityMapper.fetchAllActivityById(id);
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		ActivityBiz tar = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(ActivityBiz.class);
 //		System.out.println(tar.fetchActivityById(1).getCreator().getName());
@@ -41,6 +50,8 @@ public class ActivityBizImpl implements ActivityBiz {
 //		for(Employee map : list) {
 //			System.out.println(map.getName());
 //		}
+		
+		System.out.println(tar.fetchActivityById(1).getEmployee().getId());
 		
 		
 	}
@@ -51,5 +62,4 @@ public class ActivityBizImpl implements ActivityBiz {
 		return null;
 	}
 
-	
 }

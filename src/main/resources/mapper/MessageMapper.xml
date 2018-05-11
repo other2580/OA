@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.MessageMapper">
+
+	<sql id="messageJion">
+		SELECT m.*  FROM Message m
+        INNER JOIN Employee e ON e.id=m.`CreatorId`
+		
+	</sql>
+	<resultMap type="Message" id="MessageRM">
+		<id column="id" property="id" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="sendTime" property="sendTime" />
+		<result column="receivers" property="receivers" />
+		<result column="level" property="level" />
+		<result column="status" property="status" />
+		<result column="isSent" property="isSent" />
+		<association property="employee" javaType="Employee">
+			<id column="e_id" property="id" />
+			<result column="e_nr" property="nr" />
+			<result column="e_password" property="password" />
+			<result column="el_name" property="name" />
+			<result column="e_gender" property="gender" />
+			<result column="e_isManager" property="isManager" />
+			<result column="e_status" property="status" />
+		</association>
+		<association property="messageReception" javaType="MessageReception">
+		    <id column="r_id" property="id"/>
+			<result column="r_isRead" property="isRead" />
+			<result column="r_status" property="status" />		
+		</association>
+		
+
+	</resultMap>
+	<select id="fetchAll" resultMap="MessageRM">
+		<include refid="messageJion" />
+		<where>
+		 	e.Id = #{id}
+			<if test="title!=null and !title.isEmpty()">
+				and title like concat('%',#{title},'%')
+			</if>
+			<if test="status>=0">
+				and m.status=#{status}
+			</if>
+			<if test="level>0">
+				and m.level=#{level}
+			</if>
+			<if test="isSent>=0">
+				and m.isSent=#{isSent}
+			</if>
+		</where>
+		ORDER BY m.SendTime DESC limit #{startIndex},#{pageSize}
+	</select>
+	
+	<select id="fetchRow" resultType="int">
+		SELECT count(1) FROM Message m
+        INNER JOIN Employee e ON e.id=m.`CreatorId`
+			
+		<where>
+			e.Id = #{id}
+			<if test="title!=null and !title.isEmpty()">
+				and title like concat('%',#{title},'%')
+			</if>
+			<if test="status>=0">
+				and m.status=#{status}
+			</if>
+			<if test="level>0">
+				and m.level=#{level}
+			</if>
+			<if test="isSent>=0">
+				and m.status = 0 and m.isSent=#{isSent}
+			</if>
+		</where>
+	</select>
+	
+	<select id="fetchById" parameterType="int"  resultMap="MessageRM">
+	     <include refid="messageJion" /> where  m.id=#{id}
+	</select>
+	
+	<select id="fetchDelete" resultMap="MessageRM">
+	    SELECT m.*,r.id as r_id,r.isRead as r_isRead,r.status as r_status FROM Message m  
+	    LEFT JOIN MessageReception r ON m.`Id` = r.`MessageId`
+	    WHERE (creatorId=#{creatorId} OR receiverId=#{receiverId}) AND  (m.`STATUS`=1 OR r.`STATUS` = 1);	    
+	</select>
+	
+	<select id="fetchDeleRow" parameterType="int" resultMap="MessageRM">
+	       	SELECT count(1) FROM Message m 
+	    LEFT JOIN MessageReception r ON m.`Id` = r.`MessageId`
+	    <where>
+	         
+	          m.`STATUS`=1 OR r.`STATUS` = 1;
+	        
+	    </where>
+	</select>
+
+</mapper>

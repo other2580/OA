@@ -4,19 +4,19 @@
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myoa.mapper.ActivityActorMapper">
 	<sql id="ActivityActorJoin">
-		SELECT a.*,e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
-		d.name dname,d.description,d.status dstatus 
+		SELECT a.id,e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
+		d.name dname,d.description,d.status dstatus,d.fixedPhone dfixedPhone,d.movePhone dmovePhone,d.fax dfax 
 		FROM ActivityActor a
 		LEFT JOIN Employee e ON a.actorId=e.id 
-		LEFT JOIN Department d ON e.DepartmentId=d.id 
+		LEFT JOIN Department d ON e.DepartmentId=d.id
 		where 1=1
 	</sql>
 	<sql id="ActivityActorJoinActivity">
 		SELECT c.*,a.creatorId,a.title,a.createtime,a.description,a.location,a.startTime,a.endTime,
 		e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
-		d.name dname,d.description,d.status dstatus 
+		d.name dname,d.description,d.status dstatus,d.fixedPhone dfixedPhone,d.movePhone dmovePhone,d.fax dfax
 		FROM ActivityActor c
-		LEFT JOIN Activity a ON c.activityId=a.id 
+		LEFT JOIN Activity a ON c.activityId=a.id
 		LEFT JOIN Employee e ON a.creatorId=e.id 
 		LEFT JOIN Department d ON e.DepartmentId=d.id
 		where 1=1
@@ -42,6 +42,7 @@
 			</association>
 		</association>
 	</resultMap>
+	
 	<resultMap type="ActivityActor" id="ActivityActorJoinRM">
 		<id column="id" property="id" />
 		<association property="activity" javaType="Activity">
@@ -65,6 +66,9 @@
 					<result column="dname" property="name" />
 					<result column="description" property="description" />
 					<result column="dstatus" property="status" />
+					<result column="dfixedPhone" property="fixedPhone" />
+					<result column="dmovePhone" property="movePhone" />
+					<result column="dfax" property="fax" />
 				</association>
 			</association>
 		</association>
@@ -92,7 +96,7 @@
 		where id=#{id}
 	</update>
 	<delete id="detele" parameterType="int">
-		DELETE FROM ActivityActor WHERE where id=#{id}
+		DELETE FROM ActivityActor WHERE ActivityId=#{id}
 	</delete>
 	<select id="fetchById" parameterType="int" resultMap="ActivityActorJoinRM">
 		<include refid="ActivityActorJoinActivity"></include>

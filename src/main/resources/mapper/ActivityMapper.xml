@@ -6,7 +6,7 @@
 	<!-- 添加日程 -->
 	<insert id="add" parameterType="Activity" keyProperty="id" useGeneratedKeys="true">
 		INSERT INTO Activity(CreatorId, CreateTime, Title, Description, Location, StartTime, EndTime)	
-			VALUES(#{creator.id}, #{createtime}, #{title}, #{description}, #{location}, #{startTime}, #{endTime})
+			VALUES(#{employee.id}, #{createtime}, #{title}, #{description}, #{location}, #{startTime}, #{endTime})
 	</insert>
 	<!-- 删除日程 -->
 	<delete id="delete" parameterType="int">
@@ -16,7 +16,7 @@
 	<update id="update" parameterType="Activity">
 		UPDATE Activity
 		<set>
-			<if test="creator != null">creatorId = #{creator.id},</if>
+			<if test="creator != null">creatorId = #{employee.id},</if>
 			<if test="createtime != null">Createtime = #{createtime},</if>
 			<if test="title != null">title = #{title},</if>
 			<if test="description != null">description = #{description},</if>
@@ -29,32 +29,52 @@
 		</where>
 	</update>
 	
-	
-	<sql id="sql">
-		SELECT a.*, b.*
-		FROM Activity AS a
-			LEFT JOIN ActivityActor AS b ON(b.ActivityId = a.id)
+	<sql id="ActivityJoin">
+		SELECT a.*,e.nr,e.password,e.Name ename,e.Gender,e.departmentId,e.isManager,e.status estatus,
+		d.name dname,d.description,d.status dstatus,d.fixedPhone dfixedPhone,d.movePhone dmovePhone,d.fax dfax
+		FROM Activity a 
+		LEFT JOIN Employee e ON a.creatorId=e.id 
+		LEFT JOIN Department d ON e.DepartmentId=d.id 
+		where 1=1
 	</sql>
 	<sql id="ActivityByEmployee">
 		
 	</sql>
 	<resultMap type="Activity" id="ActivityResultMap">
-		<id column="id" property="id"/>
-		<result column="createtime" property="createtime"/>
-		<result column="title" property="title"/>
-		<result column="description" property="description"/>
-		<result column="location" property="location"/>
-		<result column="startTime" property="startTime"/>
-		<result column="endTime" property="endTime"/>
-		
-		<association property="creator" column="creatorId" 
-			javaType="Employee" select="myoa.mapper.EmployeeMapper.fetchEmployeeById" />
-		<collection property="participant" column="ActorId" 
-			 ofType="Employee" select="myoa.mapper.EmployeeMapper.fetchEmployeeById"/>
+		<id column="id" property="id" />
+		<result column="createtime" property="createtime" />
+		<result column="title" property="title" />
+		<result column="description" property="description" />
+		<result column="location" property="location" />
+		<result column="startTime" property="startTime" />
+		<result column="endTime" property="endTime" />
+		<association property="employee" javaType="Employee">
+			<id column="creatorId" property="id" />
+			<result column="nr" property="nr" />
+			<result column="password" property="password" />
+			<result column="ename" property="name" />
+			<result column="gender" property="gender" />
+			<result column="isManager" property="isManager" />
+			<result column="estatus" property="status" />
+			<association property="department" javaType="Department">
+				<id column="departmentId" property="id" />
+				<result column="dname" property="name" />
+				<result column="description" property="description" />
+				<result column="dstatus" property="status" />
+				<result column="dfixedPhone" property="fixedPhone" />
+				<result column="dmovePhone" property="movePhone" />
+				<result column="dfax" property="fax" />
+			</association>
+		</association>
 	</resultMap>
 	
 	<!-- 根据日程Id 查询日程 -->
 	<select id="fetchActivityById" resultMap="ActivityResultMap" parameterType="int">
-		<include refid="sql" /> WHERE a.id = #{id}
+		<include refid="ActivityJoin"/> and a.id=#{id}
+	</select>
+	
+	<!-- 查询当前用户的所有个人日程 -->
+	<select id="fetchAllActivityById" resultMap="ActivityResultMap">
+		<include refid="ActivityJoin"/> and a.creatorId=#{id}
 	</select>
 </mapper>

@@ -5,15 +5,23 @@ public class MessageAttachment {
 	private int id;
 	private String name;
 	private String fileUrl;
-	private int messageId;
+	private Message message;
 	
+
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
 	public MessageAttachment() {}
 	
-	public MessageAttachment(int id, String name, String fileUrl, int messageId) {
+	public MessageAttachment(int id, String name, String fileUrl) {
 		this.id = id;
 		this.name = name;
-		this.fileUrl = fileUrl;
-		this.messageId = messageId;
+		this.fileUrl = fileUrl;		
 	}
 	
 	public int getId() {
@@ -33,12 +41,6 @@ public class MessageAttachment {
 	}
 	public void setFileUrl(String fileUrl) {
 		this.fileUrl = fileUrl;
-	}
-	public int getMessageId() {
-		return messageId;
-	}
-	public void setMessageId(int messageId) {
-		this.messageId = messageId;
 	}
 	
 }

@@ -5,6 +5,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security" 
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc
 				http://www.springframework.org/schema/mvc/spring-mvc.xsd
 				http://www.springframework.org/schema/beans
@@ -14,7 +15,9 @@
 				http://www.springframework.org/schema/aop
 				http://www.springframework.org/schema/aop/spring-aop.xsd
 				http://www.springframework.org/schema/tx
-			    http://www.springframework.org/schema/tx/spring-tx.xsd">
+			    http://www.springframework.org/schema/tx/spring-tx.xsd
+			    http://www.springframework.org/schema/security              
+			    http://www.springframework.org/schema/security/spring-security.xsd">
 
 	<!-- 启动基于注解的HandlerMapp -->
 	<mvc:annotation-driven />
@@ -24,7 +27,7 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">         
 		<!-- 设置上传文件的最大尺寸 1024 字节=1K，这里是 1000K -->
 		<property name="maxUploadSize">
-			<value>1024000</value>
+			<value>10240000000</value>
 		</property>
 		<property name="defaultEncoding">
 			<value>UTF-8</value>
@@ -64,5 +67,8 @@
 		<!-- 后缀：视图文件的后缀名 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- 开启 Spring Security 方法级注解配置 --> 
+    <security:global-method-security pre-post-annotations="enabled" />   
 	
 </beans>

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springsecurity.org/jsp" prefix="sc" %>
+
 	<script type="text/javascript">
 		try{ace.settings.loadState('sidebar')}catch(e){}
 	</script>
@@ -36,14 +40,15 @@
 
 	<ul class="nav nav-list">
 		<li class="active">
-			<a href="index.html">
+			<a href="index">
 				<i class="menu-icon fa fa-tachometer"></i>
 				<span class="menu-text"> 主页 </span>
 			</a>
 
 			<b class="arrow"></b>
 		</li>
-
+		
+		<sc:authorize code="organization,organization-department,organization-employee">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-desktop"></i>
@@ -54,41 +59,39 @@
 			</a>
 			<b class="arrow"></b>
 			<ul class="submenu">
+				<sc:authorize code="organization-employee">
 				<li class="">
-					<a href="content-slider.html">
+					<a href="empTable">
 						<i class="menu-icon fa fa-caret-right"></i>
-						员工检索
+						员工管理
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
 
 				<li class="">
-					<a href="treeview.html">
+					<a href="addEmployee">
 						<i class="menu-icon fa fa-caret-right"></i>
 						添加员工
 					</a>
 					<b class="arrow"></b>
 				</li>
 
+				<sc:authorize code="organization-department">
 				<li class="">
-					<a href="jquery-ui.html">
+					<a href="depTable">
 						<i class="menu-icon fa fa-caret-right"></i>
-						添加部门
+						部门管理
 					</a>
 
 					<b class="arrow"></b>
 				</li>
-
-				<li class="">
-					<a href="nestable-list.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						部门列表
-					</a>
-					<b class="arrow"></b>
-				</li>
+				</sc:authorize>
 			</ul>
 		</li>
+		</sc:authorize>
 
+		<sc:authorize code="activity,activity-calendar,activity-list">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-calendar"></i>
@@ -98,24 +101,29 @@
 			<b class="arrow"></b>
 			
 			<ul class="submenu">
+
+				<sc:authorize code="activity-list">
 				<li class="">
-					<a href="tables.html">
+					<a href="mySchedule">
 						<i class="menu-icon fa fa-caret-right"></i>
-						个人日程
+						 日程列表
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
 
+				<sc:authorize code="activity-calendar">
 				<li class="">
 					<a href="calendar">
 						<i class="menu-icon fa fa-caret-right"></i>
-						 日程日历
+						 我的日历
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
 				
 				<li class="">
-					<a href="jqgrid.html">
+					<a href="customMeeting">
 						<i class="menu-icon fa fa-caret-right"></i>
 						 定制会议
 					</a>
@@ -123,7 +131,9 @@
 				</li>
 			</ul>
 		</li>
+		</sc:authorize>
 
+		<sc:authorize code="message,message-inbox,message-outbox,message-draft">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -136,24 +146,57 @@
 
 			<ul class="submenu">
 				<li class="">
-					<a href="form-elements.html">
+					<a href="inbox-edit">
 						<i class="menu-icon fa fa-caret-right"></i>
-						我的邮件
+						写信
 					</a>
-
 					<b class="arrow"></b>
 				</li>
-
+				
+				<sc:authorize code="message-inbox">
 				<li class="">
-					<a href="form-elements-2.html">
+					<a href="inbox?status=0">
 						<i class="menu-icon fa fa-caret-right"></i>
-						垃圾箱
+						收件箱
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				</sc:authorize>
+				
+				<sc:authorize code="message-draft">
+				<li class="">
+					<a href="inbox-send?isSent=0&&status=0">
+						<i class="menu-icon fa fa-caret-right"></i>
+						草稿箱
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				</sc:authorize>
+				
+				<sc:authorize code="message-outbox">
+				<li class="">
+					<a href="inbox-send?isSent=1&&status=0">
+						<i class="menu-icon fa fa-caret-right"></i>
+						已发送
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
+				
+				<li class="">
+					<a href="inbox-delete">
+						<i class="menu-icon fa fa-caret-right"></i>
+						回收站
+					</a>
+					<b class="arrow"></b>
+				</li>				
 			</ul>
 		</li>
+		</sc:authorize>
 
+		<sc:authorize code="announcement,announcement-list,announcement-mine,announcement-approve">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i  class="menu-icon fa fa-file-o"></i>
@@ -161,28 +204,23 @@
 
 				<b class="arrow fa fa-angle-down"></b>
 			</a>
-
 			<b class="arrow"></b>
 
 			<ul class="submenu">
+				<sc:authorize code="announcement-list">
 				<li class="">
-					<a href="profile.html">
+					<a href="announcement">
 						<i class="menu-icon fa fa-caret-right"></i>
-						公告审批
+						公告
 					</a>
 					<b class="arrow"></b>
 				</li>
-
-				<li class="">
-					<a href="inbox.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						公告申请
-					</a>
-					<b class="arrow"></b>
-				</li>
+				</sc:authorize>
 			</ul>
 		</li>
-
+		</sc:authorize>
+		
+		<sc:authorize code="security,security-role,security-user">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-tag"></i>
@@ -194,24 +232,30 @@
 			<b class="arrow"></b>
 
 			<ul class="submenu">
+				<sc:authorize code="security-user">
 				<li class="">
-					<a href="profile.html">
+					<a href="empRole">
 						<i class="menu-icon fa fa-caret-right"></i>
-						编辑角色
+						员工角色
 					</a>
 					<b class="arrow"></b>
 				</li>
-
+				</sc:authorize>
+				
+				<sc:authorize code="security-role">
 				<li class="">
-					<a href="inbox.html">
+					<a href="permissions">
 						<i class="menu-icon fa fa-caret-right"></i>
-						添加角色
+						角色权限
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
 			</ul>
 		</li>
+		</sc:authorize>
 
+		<sc:authorize code="document,document-manager">
 		<li class="">
 			<a href="#" class="dropdown-toggle">
 				<i class="menu-icon fa fa-tasks"></i>
@@ -224,23 +268,18 @@
 			<b class="arrow"></b>
 
 			<ul class="submenu">
+				<sc:authorize code="document-manager">
 				<li class="">
-					<a href="faq.html">
-						<i class="menu-icon fa fa-caret-right"></i>
-						回收站
-					</a>
-					<b class="arrow"></b>
-				</li>
-
-				<li class="">
-					<a href="blank.html">
+					<a href="fileIO">
 						<i class="menu-icon fa fa-caret-right"></i>
 						操作文件夹
 					</a>
 					<b class="arrow"></b>
 				</li>
+				</sc:authorize>
 			</ul>
 		</li>
+		</sc:authorize>
 	</ul><!-- /.nav-list -->
 
 	<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

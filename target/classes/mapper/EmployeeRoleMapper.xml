@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.EmployeeRoleMapper">
+
+	<!-- 添加新员工 -->
+	<insert id="addEmployeeRole">
+		INSERT INTO EmployeeRole(EmployeeId,RoleId) VALUES(#{id},#{rid})
+	</insert>
+	
+	<!-- 删除员工 -->
+	<delete id="delEmployeeRole">
+		DELETE FROM EmployeeRole WHERE EmployeeId = #{id} and RoleId = #{rid}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

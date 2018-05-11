@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import myoa.entity.Employee;
+import myoa.entity.Function;
 
 @Repository
 public interface EmployeeBiz {
@@ -66,4 +67,22 @@ public interface EmployeeBiz {
 	 */
 	Employee checkLogin(@Param("nr") String nr,@Param("password") String password);
 	
+	/**
+	 * 获取用户功能
+	 * 
+	 * @return 功能集合
+	 */
+	List<Function> getFunctionById(int employeeId);
+	
+	
+	
+	List<Employee> getEmployees(@Param("dids") int dids);
+	
+	List<Employee> getEmployeesPagings(@Param("dids")int dids, @Param("name")String name,@Param("nr")String nr,  @Param("pageNum")int pageNum, @Param("pageSize")int pageSize);
+	
+	int fetchEmployeesRows(@Param("dids")int dids, @Param("name")String name,@Param("nr")String nr);
+	
+	
+	int checkPwd(@Param("id") int id,@Param("password") String password);
+	void  updatePwd(@Param("id") int id,@Param("password") String password);
 }

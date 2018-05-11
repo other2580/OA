@@ -3,9 +3,12 @@ package myoa.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import myoa.entity.Employee;
+import myoa.entity.Function;
 
 @Repository
 public interface EmployeeMapper {
@@ -59,6 +62,7 @@ public interface EmployeeMapper {
 	 */
 	List<Employee> fetchAllEmployee();
 	
+	
 	/**
 	 * 登录
 	 * 
@@ -66,5 +70,27 @@ public interface EmployeeMapper {
 	 */
 	Employee checkLogin(@Param("nr") String nr,@Param("password") String password);
 	
+	/**
+	 * 获取用户功能
+	 * 
+	 * @return 功能集合
+	 */
+	List<Function> getFunctionById(int employeeId);
 	
+	
+	
+	List<Employee> getEmployees(@Param("dids") int dids);
+	
+	
+	List<Employee> getEmployeesPagings(@Param("dids")int dids, @Param("name")String name,@Param("nr")String nr, @Param("pageNum")int pageNum, @Param("pageSize")int pageSize);
+	
+	
+	int fetchEmployeesRows(@Param("dids")int dids, @Param("name")String name,@Param("nr")String nr);
+	
+	//查询输入的原密码是否和数据库一样
+		@Select("SELECT count(id) FROM Employee WHERE PASSWORD=#{password} AND id=#{id}")
+		int checkPwd(@Param("id") int id,@Param("password") String password);
+		//更新密码
+		@Update("UPDATE Employee SET PASSWORD=#{password} WHERE id=#{id}")
+		void  updatePwd(@Param("id") int id,@Param("password") String password);
 }

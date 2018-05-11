@@ -3,17 +3,34 @@ package myoa.entity;
 public class MessageReception {
 	
 	private int id;
-	private int messageId;
-	private int receiverId;
+	/*private int messageId;
+	private int receiverId;*/
 	private int isRead;
 	private int status;
+	private Message message;
+	private Employee employee;
 	
+	
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 	public MessageReception() {}
 	
-	public MessageReception(int id, int messageId, int receiverId, int isRead, int status) {
+	public MessageReception(int id,int isRead, int status) {
 		this.id = id;
-		this.messageId = messageId;
-		this.receiverId = receiverId;
 		this.isRead = isRead;
 		this.status = status;
 	}
@@ -23,19 +40,6 @@ public class MessageReception {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getMessageId() {
-		return messageId;
-	}
-	public void setMessageId(int messageId) {
-		this.messageId = messageId;
-	}
-
-	public int getReceiverId() {
-		return receiverId;
-	}
-	public void setReceiverId(int receiverId) {
-		this.receiverId = receiverId;
 	}
 	public int getIsRead() {
 		return isRead;

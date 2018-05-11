@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.RoleFunctionMapper">
+	<!-- 为角色添加新功能 -->
+	<insert id="addRoleFunction">
+		INSERT INTO RoleFunction(RoleId,FunctionId) VALUES(#{roleId},#{functionId})
+	</insert>
+	
+	<!-- 删除角色功能 -->
+	<delete id="delRoleFunction">
+		DELETE FROM RoleFunction WHERE RoleId = #{roleId} and FunctionId = #{functionId}
+	</delete>
+</mapper>

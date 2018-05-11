@@ -18,4 +18,89 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="main" value="/WEB-INF/jsp/calendar.jsp" />
 	</definition>
+	
+	
+	<!-- 定义修改员工信息界面 -->
+	<definition name="addEmployee" extends="adminTemplate">
+		<put-attribute name="title" value="修改员工信息" />
+		<put-attribute name="main" value="/WEB-INF/jsp/addEmployee.jsp" />
+	</definition>
+	<!-- 定义员工列表界面 -->
+	<definition name="empTable" extends="adminTemplate">
+		<put-attribute name="title" value="员工列表" />
+		<put-attribute name="main" value="/WEB-INF/jsp/empTable.jsp" />
+	</definition>
+	<!-- 定义员工添加列表界面 -->
+	<definition name="addEmployee" extends="adminTemplate">
+		<put-attribute name="title" value="员工添加列表" />
+		<put-attribute name="main" value="/WEB-INF/jsp/addEmployee.jsp" />
+	</definition>
+	<!-- 定义部门列表界面 -->
+	<definition name="depTable" extends="adminTemplate">
+		<put-attribute name="title" value="部门列表" />
+		<put-attribute name="main" value="/WEB-INF/jsp/depTable.jsp" />
+	</definition>
+	
+	<!-- 定制会议界面 -->
+	<definition name="customMeeting" extends="adminTemplate">
+		<put-attribute name="title" value="定制会议" />
+		<put-attribute name="main" value="/WEB-INF/jsp/customMeeting.jsp" />
+	</definition>
+	<!-- 我的日程界面 -->
+	<definition name="mySchedule" extends="adminTemplate">
+		<put-attribute name="title" value="定制会议" />
+		<put-attribute name="main" value="/WEB-INF/jsp/mySchedule.jsp" />
+	</definition>
+	<!-- 文件共享界面 -->
+	<definition name="fileIO" extends="adminTemplate">
+		<put-attribute name="title" value="文件共享" />
+		<put-attribute name="main" value="/WEB-INF/jsp/fileIO.jsp" />
+	</definition>
+	<!-- 权限管理界面 -->
+	<definition name="permissions" extends="adminTemplate">
+		<put-attribute name="title" value="权限管理" />
+		<put-attribute name="main" value="/WEB-INF/jsp/permissions.jsp" />
+	</definition>
+	
+	<!-- 权限管理界面 -->
+	<definition name="announcement" extends="adminTemplate">
+		<put-attribute name="title" value="权限管理" />
+		<put-attribute name="main" value="/WEB-INF/jsp/announcement.jsp" />
+	</definition>
+	
+	<!-- 用户权限管理界面 -->
+	<definition name="empRole" extends="adminTemplate">
+		<put-attribute name="title" value="用户权限管理" />
+		<put-attribute name="main" value="/WEB-INF/jsp/empRole.jsp" />
+	</definition>
+	
+	
+	<!-- 定义邮件界面（主页） -->
+	<definition name="inbox" extends="adminTemplate">
+		<put-attribute name="title" value="收件箱" />
+		<put-attribute name="main" value="/WEB-INF/jsp/inbox.jsp" />
+	</definition>
+	<definition name="inbox-detail" extends="adminTemplate">
+		<put-attribute name="title" value="邮箱详情" />
+		<put-attribute name="main" value="/WEB-INF/jsp/inbox-detail.jsp" />
+	</definition>
+	<definition name="inbox-send" extends="adminTemplate">
+		<put-attribute name="title" value="发送箱" />
+		<put-attribute name="main" value="/WEB-INF/jsp/inbox-send.jsp" />
+	</definition>
+	<definition name="inbox-edit" extends="adminTemplate">
+		<put-attribute name="title" value="邮件编辑" />
+		<put-attribute name="main" value="/WEB-INF/jsp/inbox-edit.jsp" />
+	</definition>
+	<definition name="inbox-delete" extends="adminTemplate">
+		<put-attribute name="title" value="回收站" />
+		<put-attribute name="main" value="/WEB-INF/jsp/inbox-delete.jsp" />
+	</definition>
+	
+	<!-- 定义错误界面 -->
+	<definition name="Role403" extends="adminTemplate">
+		<put-attribute name="title" value="403" />
+		<put-attribute name="main" value="/WEB-INF/jsp/Role403.jsp" />
+	</definition>
+	
 </tiles-definitions>

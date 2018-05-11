@@ -1,70 +1,53 @@
 package myoa.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 功能
- * 
- * @author 34761
- *
- */
 public class Function {
+	
 	private int id;
-	private String name; // 功能名称
-	private String code; // 功能编码
-	private int isMenuItem; // 是否是菜单项
-	private String menuLogo; // 菜单项的Logo
-	private String menuEntry; // 菜单项入口Url
-	// private int parentId; // 父级功能ID
-	private Function parent; // 父级对象
-	private List<Function> functions = new ArrayList<>(); // 功能集合
+	private String name;
+	private String code;
+	private int isMenuItem;
+	private String menuLogo;
+	private String menuEntry;
+	private int parentId;
 
-	public Function() {
+	private List<Function> functions;
 
-	}
+	public Function() {}
 
-	public Function(int id, String name, String code, int isMenuItem, String menuLogo, String menuEntry,
-			Function parent, List<Function> functions) {
-		super();
+	public Function(int id, String name, String code, int isMenuItem, String menuLogo, String menuEntry, 
+			int parentId) {
 		this.id = id;
 		this.name = name;
 		this.code = code;
 		this.isMenuItem = isMenuItem;
 		this.menuLogo = menuLogo;
 		this.menuEntry = menuEntry;
-		this.parent = parent;
-		this.functions = functions;
+		this.parentId = parentId;
 	}
 
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getCode() {
 		return code;
 	}
-
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 	public int getIsMenuItem() {
 		return isMenuItem;
 	}
-
 	public void setIsMenuItem(int isMenuItem) {
 		this.isMenuItem = isMenuItem;
 	}
@@ -72,31 +55,24 @@ public class Function {
 	public String getMenuLogo() {
 		return menuLogo;
 	}
-
 	public void setMenuLogo(String menuLogo) {
 		this.menuLogo = menuLogo;
 	}
-
 	public String getMenuEntry() {
 		return menuEntry;
 	}
-
 	public void setMenuEntry(String menuEntry) {
 		this.menuEntry = menuEntry;
 	}
-
-	public Function getParent() {
-		return parent;
+	public int getParentId() {
+		return parentId;
 	}
-
-	public void setParent(Function parent) {
-		this.parent = parent;
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
-
 	public List<Function> getFunctions() {
 		return functions;
 	}
-
 	public void setFunctions(List<Function> functions) {
 		this.functions = functions;
 	}

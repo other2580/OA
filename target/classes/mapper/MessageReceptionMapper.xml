@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.MessageReceptionMapper">
+
+	<sql id="messageReJion">
+		SELECT r.*,
+		 m.title AS m_title,m.content AS m_content,m.sendtime AS m_sendTime,m.level AS m_level,
+		 m.status AS m_status,m.receivers AS m_receivers,m.`Id`AS m_id,
+		 e.id AS e_id,e.nr AS e_nr,el.name AS el_name,el.`Id` AS el_id FROM MessageReception r
+				 JOIN  Message m  ON r.messageid=m.id
+				 LEFT JOIN Employee e ON e.Id = r.ReceiverId
+		         LEFT JOIN Employee el ON el.Id = m.CreatorId
+	</sql>
+	<resultMap type="MessageReception" id="MessageReceptionRM">
+		<id column="id" property="id"/>
+		<result column="isRead" property="isRead" />
+		<result column="status" property="status" />
+		<association property="message" javaType="Message">
+			<id column="m_id" property="id" />
+			<result column="m_title" property="title" />
+			<result column="m_content" property="content" />
+			<result column="m_sendtime" property="sendTime" />
+			<result column="m_receivers" property="receivers" />
+			<result column="m_level" property="level" />
+			<result column="m_status" property="status" />
+			<result column="m_isSent" property="isSent" />
+		</association>
+		<association property="employee" javaType="Employee">
+			<id column="e_id" property="id" />
+			<result column="e_nr" property="nr" />
+			<result column="e_password" property="password" />
+			<result column="el_name" property="name" />
+			<result column="el_id" property="id" />
+			<result column="e_gender" property="gender" />
+			<result column="e_isManager" property="isManager" />
+			<result column="e_status" property="status" />
+		</association>
+
+	</resultMap>
+	<select id="fetchReAll" resultMap="MessageReceptionRM">
+			<include refid="messageReJion"/>
+			<where>
+			    e.Id = #{id}
+				<if test="isRead>=0">
+				    and r.isRead=#{isRead}
+				</if>
+			    <if test="status>=0">
+			        and r.status=#{status}			    
+			    </if>
+			</where>
+			ORDER BY m_sendtime DESC limit #{startIndex},#{pageSize}
+	</select>
+	<select id="fetchReRow" resultType="int">
+			SELECT  COUNT(1) FROM MessageReception r LEFT JOIN  Employee e ON r.receiverId=e.id 
+			<where>
+			    e.Id = #{id}
+			    <if test="isRead>=0">
+				    and r.isRead=#{isRead}
+				</if>
+			    <if test="status>=0">
+			        and r.status=#{status}			    
+			    </if>		
+			</where>	
+	</select>
+	
+	<select id="fetchId" parameterType="int" resultMap="MessageReceptionRM">
+		 <include refid="messageReJion"/>
+		 <where>
+		      <if test="id>0">
+		          and r.id=#{id}
+		      </if>
+		 </where>   	
+	</select>
+
+
+</mapper>

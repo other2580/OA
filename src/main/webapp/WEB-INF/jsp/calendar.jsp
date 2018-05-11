@@ -7,8 +7,8 @@
 		<link rel="stylesheet" href="static/assets/css/jquery-ui.custom.min.css" />
 		<link rel="stylesheet" href="static/assets/css/fullcalendar.min.css" />
 		<!-- ace styles -->
-		<link rel="stylesheet" href="static/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-		<!--[if lte IE 9]>
+		<!--<link rel="stylesheet" href="static/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+		[if lte IE 9]>
 			<link rel="stylesheet" href="static/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
 		<![endif]-->
 		<link rel="stylesheet" href="static/assets/css/ace-skins.min.css" />
@@ -25,11 +25,6 @@
 		<script src="static/assets/js/respond.min.js"></script>
 		<![endif]-->
 		
-		<!-- datetimepicker -->
-		<link href="${pageContext.request.contextPath}/static/datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
-		<script src="${pageContext.request.contextPath}/static/datetimepicker/js/bootstrap-datetimepicker.js"></script>
-		<script src="${pageContext.request.contextPath}/static/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-		
 		<script type="text/javascript">
 			$(function(){
 				$(".time").datetimepicker({
@@ -37,14 +32,6 @@
 					autoclose:true,     	//选择后自动关闭
 					startDate:new Date()
 				});
-			});
-			
-			//鼠标悬停
-			$("p").mouseover(function(){
-			    $("p").css("background-color","yellow");
-			});
-			$("p").mouseout(function(){
-			    $("p").css("background-color","#E9E9E4");
 			});
 		</script>         
 	    
@@ -151,6 +138,7 @@
 						<!-- PAGE CONTENT BEGINS -->
 						<div class="row">
 							<div class="col-sm-9">
+								<input type="hidden" value="" id="userId"/>
 								<div class="space"></div>
 
 								<div id="calendar"></div>
@@ -207,35 +195,41 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">我的日程</h4>
 		      </div>
-		      <form class="form-horizontal" action="?" method="post">
+		      <form class="form-horizontal" action="addActivity" method="post">
 		      	<div class="modal-body">
 				  <div class="form-group">
 				    <label for="inputTitle" class="col-sm-2 control-label">标题</label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="inputTitle" placeholder="下午有个会议">
+				      <input type="text" name="title" size="24" placeholder="下午有个会议">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputTitle" class="col-sm-2 control-label">地点</label>
+				    <div class="col-sm-10">
+				      <input type="text" name="location" size="24" placeholder="广州广力科技有限公司">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputStars" class="col-sm-2 control-label">开始时间</label>
 				    <div class="col-sm-10">
-					    <input size="24" type="text" value="" id="inputStars" class="time">
+					    <input size="24" name="startTime" type="text" value="" class="time">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputEnd" class="col-sm-2 control-label">结束时间</label>
 				    <div class="col-sm-10">
-				      <input size="24" type="text" value="" id="inputEnd" class="time">
+				      <input size="24" name="endTime" type="text" value="" class="time">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputConent" class="col-sm-2 control-label">会议内容</label>
 				    <div class="col-sm-10">
-				      <textarea class="form-control" rows="3"></textarea>
+				      <textarea class="form-control" rows="5" name="description"></textarea>
 				    </div>
 				  </div>
 			    </div>
 			    <div class="modal-footer">
-			      <button type="submit" class="btn btn-primary">Save changes</button>
+			      <button type="submit" class="btn btn-primary">Save</button>
 			      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			    </div>
 			  </form>
@@ -243,26 +237,6 @@
 		  </div>
 		</div>
 		
-		<!-- 模态框显示日程详细信息 -->
-		<!-- Modal -->
-		<div class="modal fade" id="myModalDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header" style="text-align: center;">
-		        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-		      </div>
-		      <div class="modal-body">
-		        <table>
-		        	<tr>
-		        		<td></td>
-		        	</tr>
-		        </table>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		
-
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -291,7 +265,6 @@
 			-----------------------------------------------------------------*/
 		
 			$('#external-events div.external-event').each(function() {
-		
 				var eventObject = {
 					title: $.trim($(this).text()) // use the element's text as the event title
 				};
@@ -316,6 +289,49 @@
 			var m = date.getMonth();
 			var y = date.getFullYear();
 		
+			Date.prototype.Format = function(format){
+	            var o = {
+	                "M+" : this.getMonth()+1, //month
+	                "d+" : this.getDate(), //day
+	                "h+" : this.getHours(), //hour
+	                "m+" : this.getMinutes(), //minute
+	                "s+" : this.getSeconds(), //second
+	                "q+" : Math.floor((this.getMonth()+3)/3), 
+	                "S" : this.getMilliseconds() //millisecond
+	            };
+	            if(/(y+)/.test(format)) {
+	                format = format.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+	            }
+	            for(var k in o) {
+	                if(new RegExp("("+ k +")").test(format)) {
+	                    format = format.replace(RegExp.$1, RegExp.$1.length==1 ? o[k] : ("00"+ o[k]).substr((""+ o[k]).length));
+	                }
+	            }
+	            return format;
+	        };
+	        //将数据库的时间戳转成 *年*月*日 字符串
+	        function getDate(DBTime){
+	            var date = new Date(DBTime);
+	            var year = date.getFullYear();
+	            var month = date.getMonth()+1;
+	            var day = date.getDate();
+	            var dateStr;
+	            if(month<10&&day<10){
+	                dateStr = year+"-0"+month+"-0"+day;
+	            }else if(month<10&&day>=10){
+	                dateStr = year+"-0"+month+"-"+day;
+	            }else if(month>=10&&day<10){
+	                dateStr = year+"-"+month+"-0"+day;
+	            }else if(month>=10&&day>=10){
+	                dateStr = year+"-"+month+"-"+day;
+	            }
+	            return dateStr;
+	        }
+	        //将数据库的时间戳转成 *时*分 字符串
+	        function getTime(DBTime){
+	            var time = DBTime.substring(0,2)+"-"+DBTime.substring(3,5);
+	            return time;
+	        }
 		
 			var calendar = $('#calendar').fullCalendar({
 				//isRTL: true,
@@ -333,29 +349,64 @@
 					center: 'title',
 					right: 'month,agendaWeek,agendaDay',
 				},
-				events: [
-				  {
-					  title: 'All Day Event',
-	                  start: '2018-04-12',
-	               	  color: 'green'
-				  },
-		          {
-		              id: 3,
-		              title: '给一点颜色',
-		              start: '2018-04-16 14:00',
-		              color: 'green',
-		              url:'https://v3.bootcss.com/javascript/#modals'
-		          },
-		          {
-	                  id: 5,
-	                  title: '使用className:doing',
-	                  start: '2018-04-16',
-	                  end: '2018-04-18',
-	                  color: 'green',
-	                  className: 'doing'
-		          }
-				]
-				,
+				//日程数据
+                events: function (start, end, timezone, callback) {
+                    var date = new Date();
+                    var nowDate = date.Format("yyyyMMdd");
+                    var nowTime = date.Format("hhmmss");
+                    $.ajax({//
+                        url: 'activity',
+                        dataType: 'json',
+                        type: 'post',
+                        success: function (result) { // 获取当前月的数据
+                        	$("#userId").val(result.userId);
+                            var events = [];
+                            if (result.data != null) {//result.data其实就是从后台返回前台的一个活动list，
+                                var len = result.data.length;
+                                var list = result.data;
+                                for (var i = 0; i < len; i++) {
+                                	var alist=list[i].activity;
+                                    var startDate = getDate(alist.startTime);//通过getDate方法将日期格式进行转化
+                                    var ccDate = startDate.replace(/\-/g, "");//去掉日期格式中的“-”
+                                    var actEndDate=getDate(alist.endTimeLong);
+                                    var userId=alist.employee.id;//创建者id
+                                    var endTime = getTime(alist.endTimeInfo);//通过getTime方法将时间格式进行转化
+                                    var ccTime = endTime.replace(/\-/g, "");//去掉时间格式中的“-”
+                                    if ((ccDate > nowDate || (ccDate == nowDate && ccTime > nowTime))) {
+                                    	if(userId==result.userId){  //${loginUser.id}
+                                    		events.push({
+                                                id: alist.id,//这里我是将活动id作为fullcalendar中event事件的Id
+                                                title: alist.title,//title我显示的是活动的名称
+                                                start: startDate,//start表示这个event事件放在哪个日期框中
+                                                end:actEndDate,	
+                                                color: 'green'//设置event的背景颜色，若该活动还没开始且该活动已经删除则显示为红色
+                                            });
+                                    	}else{
+                                    		events.push({
+                                                id: alist.id,//这里我是将活动id作为fullcalendar中event事件的Id
+                                                title: alist.title,//title我显示的是活动的名称
+                                                start: startDate,//start表示这个event事件放在哪个日期框中
+                                                end:actEndDate,	
+                                                color: '#ff9f2c'//设置event的背景颜色，若该活动还没开始且该活动已经删除则显示为红色
+                                            });
+                                    	}
+                                    } 
+                                    else {
+                                        events.push({
+                                            id: alist.id,
+                                            title: alist.title,
+                                            start: startDate,
+                                            end:actEndDate,	
+                                            color: 'gray'//若该活动已经结束则显示为灰色
+                                        });
+                                    }
+                                }
+                            }
+                            callback(events);
+                            
+                        }
+                    });
+                },
 				
 				/**eventResize: function(event, delta, revertFunc) {
 		
@@ -404,41 +455,136 @@
 				}
 				,
 				eventClick: function(calEvent, jsEvent, view) {
-									
+					var userId = $("#userId").val();
+					console.log(calEvent.id+" 123");
+					// 调用Ajax
+					$.ajax({
+						type: "get",
+						url: "activityById",
+						data: {"activityId":calEvent.id},
+						dataType: "json",
+						success: function(json){
+							//判断该日程您是参与者还是创建者
+							console.log(json.employee.id+" 123");
+							if(json.employee.id == userId){
+								$("#title").val(json.title);
+								$("#address").val(json.location);
+								$("#startTime").val(json.startTimeLong);
+								$("#endTime").val(json.endTimeLong);
+								$("#description").text(json.description);
+								$("#hiddenId").val(json.id);
+								$("#myTime").modal('show');
+								$("#aa").attr("href","delActivity?id="+json.id+"");
+							}else{
+								var modal = 
+									'<div class="modal fade">\
+									   <div class="modal-dialog">\
+									     <div class="modal-content">\
+								            <div class="modal-body">\
+								                <form class="form-horizontal" action="" method="post">\
+								                    <div class="form-group" style="text-align:center;">\
+								                        <label>'+json.title+'</label>\
+								                    </div>\
+								                    <div class="form-group" style="margin-left: 10px;">\
+											   	  	  <label for="exampleInput">地点</label>\
+											   	  	  <lable style="margin-left: 10px;">'+json.location+'</lable>\
+												    </div>\
+								                    <div class="form-group" style="margin-left: 10px;">\
+											   	  	  <label for="exampleInput">开始时间</label>\
+											   	  	  <lable style="margin-left: 10px;">'+json.startTimeLong+'</lable>\
+												    </div>\
+												    <div class="form-group" style="margin-left: 10px;">\
+											   	  	  <label for="exampleInput">结束时间</label>\
+													  <lable style="margin-left: 10px;">'+json.endTimeLong+'</lable>\
+												    </div>\
+								                    <div class="modal-footer" style="text-align:left;height:auto;">\
+								                        <div>'+json.description+'</div>\
+								                    </div>\
+								                </form>\
+								            </div>\
+									    </div>\
+									  </div>\
+									</div>';	
+							}
+							
+							var modal = $(modal).appendTo('body');
+							modal.find('form').on('submit', function(ev){
+								ev.preventDefault();
+								calEvent.title = $(this).find("input[type=text]").val();
+								calendar.fullCalendar('updateEvent', calEvent);
+								modal.modal("hide");
+							});
+							modal.find('button[data-action=delete]').on('click', function() {
+								calendar.fullCalendar('removeEvents' , function(ev){
+									return (ev._id == calEvent._id);
+								})
+								modal.modal("hide");
+							});
+							
+							modal.modal('show').on('hidden', function(){
+								modal.remove();
+							});
 				
-					var modal = $(modal).appendTo('body');
-					modal.find('form').on('submit', function(ev){
-						ev.preventDefault();
-						calEvent.title = $(this).find("input[type=text]").val();
-						calendar.fullCalendar('updateEvent', calEvent);
-						modal.modal("hide");
-					});
-					modal.find('button[data-action=delete]').on('click', function() {
-						calendar.fullCalendar('removeEvents' , function(ev){
-							return (ev._id == calEvent._id);
-						})
-						modal.modal("hide");
+				
+							//console.log(calEvent.id+" 123");
+							//console.log(calEvent.title+" 123");
+							//console.log(jsEvent+" 123");
+							//console.log(view+" 123");
+				
+							// change the border color just for fun
+							//$(this).css('border-color', 'red');
+						}
 					});
 					
-					modal.modal('show').on('hidden', function(){
-						modal.remove();
-					});
-		
-		
-					console.log(calEvent.id+" 123");
-					console.log(calEvent.title+" 123");
-					console.log(jsEvent+" 123");
-					console.log(view+" 123");
-		
-					// change the border color just for fun
-					//$(this).css('border-color', 'red');
-		
 				},
 			});
 			
 		})
+		
+		$(".time").datetimepicker({
+			format: "yyyy-mm-dd hh:ii",	//日期格式
+			autoclose:true,     	//选择后自动关闭
+			startDate:new Date()
+		});
 		</script>
 		
+		<div class="modal fade" id="myTime" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog">
+		   <div class="modal-content">
+			   <form class="no-margin" action="updateActivity" method="post">
+				 <div class="modal-body">
+			   	      <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>
+				   	  <div class="form-group">
+				   	    <label for="exampleInput">日程标题</label>
+				   	    <input type="text" class="form-control" id="title" name="title" value="">
+				   	  </div>
+				   	  <div class="form-group">
+				   	    <label for="exampleInput">地点</label>
+				   	    <input type="text" class="form-control" id="address" name="location" value="">
+				   	  </div>
+				   	  <div class="form-group">
+				   	  	<label for="exampleInput">开始时间</label>
+						<input type="text" value="" class="time" id="startTime" name="startTime" style="margin-left: 10px;"/>
+					  </div>
+					  <div class="form-group">
+					    <label for="exampleInput">结束时间</label>
+					    <input type="text" value="" class="time" id="endTime" name="endTime" style="margin-left: 10px;"/>
+					  </div>
+				   	  <div class="form-group">
+				   	    <label for="exampleInput">日程内容</label>
+				   	 	<textarea class="form-control" rows="5" id="description" name="description"></textarea>
+				   	  </div>
+				 </div>
+				 <div class="modal-footer">
+				 	<input type="hidden" name="id" id="hiddenId" value=""/>
+				 	<button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>
+					<a id="aa" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</a>
+					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>
+				 </div>
+			  </form>
+		   </div>
+		 </div>
+		</div>
 		
 		
 		

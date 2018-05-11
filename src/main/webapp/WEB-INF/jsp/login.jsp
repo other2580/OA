@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,7 +31,7 @@
     </div>
     <div id="js-modal-overlay" class="modal-overlay"></div>
     <div id="js-modal-holder" class="modal-holder">
-      <div id="js-hint1" class="hint hint--1">play with the form<br> to be sure it is just<br>a plain HTML</div>
+      <div id="js-hint1" class="hint hint--1">Please enter the <br>Nr and PASSWORD <br>to login.</div>
       <div id="js-hint2" class="hint hint--2">then hit<br> the close icon</div>
       <div id="js-effect" style="outline1: 1px solid red" class="effect">
         <div class="effect__burst">
@@ -83,7 +85,10 @@
           </svg>
         </div>
       </div>
-      <form1 action="" id="js-modal" class="modal">
+      
+      
+      
+      <form action="checklogin" id="js-modal" class="modal" method="post">
         <div id="js-close-button" class="modal__close">
           <div id="" title="" class="icon ">
             <svg viewBox="0 0 32 32">
@@ -95,16 +100,16 @@
         <div class="modal__description"></div>
         <div class="modal__section">
             <div class="input-with-label">
-              <input id="name" type="text" class="input-with-label__input" value="admin">
-              <label for="name" class="input-with-label__label">email
+              <input id="name" type="text" name="username" class="input-with-label__input">
+              <label for="name" class="input-with-label__label">Nr
                 <div class="input-with-label__label__corner"></div>
               </label>
             </div>
         </div>
         <div class="modal__section">
             <div class="input-with-label">
-              <input id="password" type="password" class="input-with-label__input">
-              <label for="password" class="input-with-label__label">password
+              <input id="password" name="password" type="password" class="input-with-label__input">
+              <label for="password" class="input-with-label__label">Password
                 <div class="input-with-label__label__corner"></div>
               </label>
             </div>
@@ -117,7 +122,14 @@
             <button class="button--grey">cancel</button>
           </div>
         </div>
-      </form1>
+        <c:if test="${param.error!=null}">
+	   		 <div class="alert alert-danger" role="alert" style="text-align: center;margin-top:15px;margin-top: 10px;color: red;">用户名或者密码错误！</div>
+		</c:if>
+		<c:if test="${param.logout!=null}">   
+			<div class="alert alert-danger" role="alert" style="text-align: center;margin-top:15px;margin-top: 10px;color: red;">登录已注销！</div>   
+		</c:if> 
+      </form>
+      
       <svg style="display:none">
         <image width="480" height="450" xlink:href="" id="proto-image" class="js-proto-image"></image>
       </svg>

@@ -42,15 +42,19 @@
 		<include refid="DocumentJoinEmployee"/> where d.parentId = #{parentId}
 	</select>
 	
-	<!-- 新增 -->
+	<!-- 新增文件夹 -->
 	<insert id="addDocument" parameterType="Document">
-		INSERT INTO Document(NAME,Description,CreatorId,CreateTime,TYPE,FileUrl,ParentId)
-		VALUES(#{name},#{description},#{creatorId},now(),#{type},#{fileUrl},#{parentId})
+		INSERT INTO Document(NAME,CreatorId,CreateTime,TYPE,FileUrl,ParentId)
+		VALUES(#{name},#{employee.id},now(),#{type},#{fileUrl},#{parentId})
 	</insert>
 	
 	<!-- 删除 -->
 	<delete id="delDocument" parameterType="int">
 		delete from Document where id = #{id}
 	</delete>
+	
+	<select id="fetchById" parameterType="int" resultType="Document">
+		SELECT * FROM Document WHERE Id=#{id}
+	</select>
 	
 </mapper>

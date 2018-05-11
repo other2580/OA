@@ -13,7 +13,25 @@ public class Message {
 	private int level;
 	private int status;
 	private int isSent;
+	private Employee employee;
+	private MessageReception messageReception;
 	
+
+	public MessageReception getMessageReception() {
+		return messageReception;
+	}
+
+	public void setMessageReception(MessageReception messageReception) {
+		this.messageReception = messageReception;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 	public Message(){}
 	
 	public Message(int id, String title, String content, int creatorId, Date sendTime, String receivers, int level,

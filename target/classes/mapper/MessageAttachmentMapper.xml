@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoa.mapper.MessageAttachmentMapper">
+
+<resultMap type="MessageAttachment" id="mAttachmentRm">
+        <id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="fileUrl" property="fileUrl" />
+		<association property="message" javaType="Message">
+		    <id column="message_id" property="id" />
+			<result column="message_title" property="title" />
+			<result column="message_content" property="content" />
+			<result column="message_sendTime" property="sendTime" />
+			<result column="message_receivers" property="receivers" />
+			<result column="message_level" property="level" />
+			<result column="message_status" property="status" />
+			<result column="message_isSent" property="isSent" />		
+		</association>
+</resultMap>
+
+</mapper>

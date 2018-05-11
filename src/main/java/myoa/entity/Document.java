@@ -1,6 +1,7 @@
 package myoa.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Document {
 	
@@ -12,11 +13,12 @@ public class Document {
 	private String fileUrl;
 	private Employee employee;
 	private int parentId;
+	private List<Document> documents;
 	
 	public Document() {}
 	
 	public Document(int id, String name, String description, Date createTime, String type,
-			String fileUrl, int parentId) {
+			String fileUrl, int parentId,List<Document> documents) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -24,6 +26,15 @@ public class Document {
 		this.type = type;
 		this.fileUrl = fileUrl;
 		this.parentId = parentId;
+		this.documents = documents;
+	}
+	
+	public Document(String name, Employee employee, String type, String fileUrl, int parentId) {
+		this.name = name;
+		this.type = type;
+		this.parentId = parentId;
+		this.employee = employee;
+		this.fileUrl = fileUrl;
 	}
 	
 	public int getId() {
@@ -75,6 +86,14 @@ public class Document {
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	
+	public List<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
 	}
 	
 }

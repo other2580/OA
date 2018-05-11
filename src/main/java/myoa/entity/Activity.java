@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import myoa.web.until.ConvertTime;
+
 public class Activity {
 	
 	private int id;
@@ -13,13 +17,14 @@ public class Activity {
 	private String title; // 活动名称
 	private String description; // 描述
 	private String location; // 地点
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date startTime; // 开始时间
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date endTime; // 结束时间
 	private List<Employee> participant = new ArrayList<>(); // 活动参与者
 	private Employee employee;
 
-	public Activity() {
-	}
+	public Activity() {}
 
 	public Activity(int id, Employee creator, Date createtime, String title, String description, String location,
 			Date startTime, Date endTime, List<Employee> participant) {
@@ -114,6 +119,24 @@ public class Activity {
 
 	public Date getEndTime() {
 		return endTime;
+	}
+	
+	public String getStartTimeLong() {
+		String time=ConvertTime.DateToLongStr(this.startTime);
+		return time;
+	}
+	
+	public String getEndTimeInfo() {
+		String time=ConvertTime.DateToTimeStr(this.endTime);
+		return time;
+	}
+	public String getEndTimeLong() {
+		String time=ConvertTime.DateToLongStr(this.endTime);
+		return time;
+	}
+	public Date getEndTimeAddOneDay() {
+		Date time=ConvertTime.getAddDay(this.endTime, 1);
+		return time;
 	}
 
 	public void setEndTime(Date endTime) {

@@ -14,4 +14,8 @@ public interface DocumentBiz {
 	
 	void delDocument(int id);
 	
+	int fetchByReturn(int parentId);
+	
+	Document fetchById(int id);
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import myoa.biz.DocumentBiz;
@@ -18,7 +19,20 @@ public class DocumentBizImpl implements DocumentBiz{
 	
 	@Override
 	public List<Document> fetchByParentId(int parentId) {
-		return documentMapper.fetchByParentId(parentId);
+		List<Document> document;
+		if(parentId==0) {
+			document = documentMapper.fetchByParentId(0);
+		}else {
+			document = documentMapper.fetchByParentId(parentId);
+		}
+		if(document.size() != 0) {
+			for(Document d : document) {
+				List<Document> docs = documentMapper.fetchByParentId(d.getId());
+				d.setDocuments(docs);
+			}
+		}
+		
+		return document;
 	}
 
 	@Override
@@ -36,11 +50,27 @@ public class DocumentBizImpl implements DocumentBiz{
 		documentMapper.delDocument(id);
 	}
 	
-	public static void main(String[] args) {
-		DocumentBiz target = new ClassPathXmlApplicationContext("spring-beans.xml").getBean(DocumentBiz.class);
-		for(Document list : target.fetchByParentId(1)) {
-			System.out.println(list.getParentId()+"   "+list.getName()+"   "+list.getEmployee().getName());
+	@Override
+	public int fetchByReturn(int parentId) {
+		int aa = 0;
+		try {
+			aa = documentMapper.fetchByReturn(parentId);
+		} catch (Exception e) {
+			aa = 0;
 		}
+		return aa;
 	}
+
+	@Override
+	public Document fetchById(int id) {
+		return documentMapper.fetchById(id);
+	}
+	
+	public static void main(String[] args) {
+		Md5PasswordEncoder md5 = new Md5PasswordEncoder();  
+ 	 	String pwd = md5.encodePassword("123", "Nr002"); 
+ 	 	System.out.println(pwd);
+	}
+
 
 }

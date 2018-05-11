@@ -4,17 +4,26 @@ public class Department {
 	
 	private int id;
 	private String name;
+	private String fixedPhone;
+	private String movePhone;
+	private String fax;
 	private String description;
 	private int status;
 	
-	public Department() {}
 	
-	public Department(int id, String name, String description, int status) {
+	public Department(){}
+	public Department(int id, String name, String fixedPhone, String movePhone, String fax, String description,
+			int status) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.fixedPhone = fixedPhone;
+		this.movePhone = movePhone;
+		this.fax = fax;
 		this.description = description;
 		this.status = status;
 	}
+	
 	
 	public int getId() {
 		return id;
@@ -28,6 +37,24 @@ public class Department {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getFixedPhone() {
+		return fixedPhone;
+	}
+	public void setFixedPhone(String fixedPhone) {
+		this.fixedPhone = fixedPhone;
+	}
+	public String getMovePhone() {
+		return movePhone;
+	}
+	public void setMovePhone(String movePhone) {
+		this.movePhone = movePhone;
+	}
+	public String getFax() {
+		return fax;
+	}
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -40,5 +67,7 @@ public class Department {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+
 	
 }

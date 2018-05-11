@@ -5,7 +5,7 @@
 <mapper namespace="myoa.mapper.EmployeeMapper">
 	<!-- 添加新员工 -->
 	<insert id="add" parameterType="Employee" keyProperty="id" useGeneratedKeys="true">
-		INSERT INTO Employee(Nr,PASSWORD,NAME,Gender,Email,DepartmentId,IsManager,STATUS) VALUES(#{nr}, #{password}, #{name}, #{gender},#{email}, #{department.id}, #{isManager}, #{status})
+		INSERT INTO Employee(Nr,PASSWORD,NAME,Gender,Email,entryDate,DepartmentId,IsManager,STATUS) VALUES(#{nr},#{password},#{name},#{gender},#{email},#{entryDate},#{department.id},#{isManager},#{status})
 	</insert>
 	<!-- 删除员工 -->
 	<delete id="delete" parameterType="int">
@@ -23,6 +23,7 @@
 			<if test="department != null">DepartmentId = #{department.id},</if>
 			<if test="isManager != null">IsManager = #{isManager},</if>
 			<if test="status != null">status = #{status},</if>
+			<if test="entryDate != null">entryDate = #{entryDate},</if>
 		</set>
 		<where>
 			id = #{id}
@@ -49,6 +50,7 @@
 		<result column="gender" property="gender"/>
 		<result column="isManager" property="isManager"/>
 		<result column="status" property="status"/>
+		<result column="entryDate" property="entryDate"/>
 		
 		<!-- 填充部门 -->
 		<association property="department" javaType="Department">
@@ -56,6 +58,9 @@
 			<result column="department_name" property="name"/>
 			<result column="department_description" property="description"/>
 			<result column="department_status" property="status"/>
+			<result column="department_fixedPhone" property="fixedPhone" />
+			<result column="department_movePhone" property="movePhone" />
+			<result column="department_fax" property="fax" />
 		</association>
 		
 		<!-- <association property="department" column="departmentId" 
@@ -80,5 +85,66 @@
 	<select id="fetchAllEmployee" resultMap="EmployeeResultMap">
 		<include refid="sql" />
 	</select>
+	
+	
+	<select id="getEmployeesPagings" resultMap="EmployeeResultMap">
+		<include refid="sql" />
+		<where>
+		    <if test="dids>0">
+		    	  and d.id=#{dids}		    
+		    </if>	
+		     <if test="name!=null and name!=''">
+				and e.Name like CONCAT('%',#{name},'%') 
+			</if>
+			<if test="nr!=null and nr!=''">
+				and e.Nr like CONCAT('%',#{nr},'%')
+			</if>
+		</where>		
+		limit #{pageNum},#{pageSize} 
+	</select>
+	
+	<select id="fetchEmployeesRows" resultType="int">
+		SELECT  COUNT(1)
+		 FROM Employee AS e
+			LEFT JOIN Department AS d ON(e.DepartmentId = d.id)
+			LEFT JOIN Role AS r ON(r.`Id` IN (SELECT RoleId FROM EmployeeRole WHERE employeeId = e.`Id`))
+		<where>
+		    <if test="dids>0">
+		    	  and d.id=#{dids}		    
+		    </if>		
+		     <if test="name!=null and name!=''">
+				and e.Name like CONCAT('%',#{name},'%')
+			</if>
+		</where>
+	</select> 
+	
+	
+	
+	
+	<select id="checkLogin" parameterType="hashmap" resultType="Employee">
+		SELECT * FROM Employee
+			WHERE  Nr=#{nr} AND PASSWORD=#{password}
+	</select>
+	
+	<select id="getFunctionById" parameterType="int" resultType="Function">
+		SELECT DISTINCT f.* FROM Employee e
+			INNER JOIN EmployeeRole er ON er.`EmployeeId` = e.`Id`
+			INNER JOIN Role r ON r.`Id` = er.`RoleId`
+			INNER JOIN RoleFunction rf ON rf.`RoleId` = r.`Id`
+			INNER JOIN `FUNCTION` f ON f.`Id` = rf.`FunctionId`
+		WHERE e.`Id` = #{employeeId}
+	</select>
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+

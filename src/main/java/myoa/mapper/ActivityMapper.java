@@ -1,5 +1,7 @@
 package myoa.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +40,13 @@ public interface ActivityMapper {
 	 * @return 日程对象
 	 */
 	Activity fetchActivityById(@Param("id") int id);
+	
+	
+	/**
+	 * 查找全部日程
+	 * 
+	 * @return 日程对象
+	 */
+	List<Activity> fetchAllActivityById(@Param("id")int id);
 	
 }

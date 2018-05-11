@@ -39,7 +39,7 @@
 			<result column="function_isMenuItem" property="isMenuItem"/>
 			<result column="function_menulogo" property="menuLogo"/>
 			<result column="function_menuEntry" property="menuEntry"/>
-			<result column="function_parentId" property="parent.id"/>
+			<result column="function_parentId" property="parentId"/>
 		</collection>
 	</resultMap>
 	
